@@ -1,22 +1,36 @@
 import { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
 
-//TODO move to nav
-import ThemeToggle from './components/ThemeToggle';
+//pages
+import Dashboard from './pages/Dashboard';
+import Powers from './pages/Powers';
+import Superheroes
+  from './pages/Superheroes';
+import Navigation from './components/Navigation';
 
 function App() {
   const [count, setCount] = useState(0);
 
   return (
     <>
+      <Navigation />
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/powers" element={<Powers />} />
+        <Route path="/superheroes" element={<Superheroes />} />
+      </Routes>
       <div>
+
+        <div className="navbar bg-base-100">
+          <a className="btn btn-ghost text-xl">daisyUI</a>
+        </div>
         <h1 className="text-3xl font-bold underline">
           Hello world!
         </h1>
-        {/* TODO move to nav */}
-        <ThemeToggle />
+
         <div className="stats shadow">
 
           <div className="stat">
