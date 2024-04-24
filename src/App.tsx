@@ -3,6 +3,9 @@ import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
 
+//TODO move to nav
+import ThemeToggle from './components/ThemeToggle';
+
 function App() {
   const [count, setCount] = useState(0);
 
@@ -12,6 +15,8 @@ function App() {
         <h1 className="text-3xl font-bold underline">
           Hello world!
         </h1>
+        {/* TODO move to nav */}
+        <ThemeToggle />
         <div className="stats shadow">
 
           <div className="stat">
@@ -30,7 +35,7 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
+        <button className="btn" onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
         <p>
