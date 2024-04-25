@@ -4,6 +4,7 @@ import PowerIcon from '../components/graphics/PowerIcon';
 import NumHeroesIcon from '../components/graphics/NumHeroesIcon';
 import FewestPowersIcon from '../components/graphics/FewestPowersIcon';
 import MostPowersIcon from '../components/graphics/MostPowersIcon';
+import StatCard from '../components/StatCard';
 
 function Dashboard() {
 
@@ -21,43 +22,39 @@ function Dashboard() {
   return (
     <div className="flex flex-col">
       <div className="flex-1 overflow-y-auto md:pt-4 pt-4 px-6  ">
+        
         {/* 4 Mini stats */}
         <article className="grid lg:grid-cols-4  md:grid-cols-2 grid-cols-1 mt-2 mb-2 gap-6">
-
-          <div className="stat">
-            <div className="stat-figure text-primary">
-              <MostPowersIcon />
-            </div>
-            <div className="stat-title">Hero with the most powers</div>
-            <div className="stat-value text-primary">Superman</div>
-            <div className="stat-desc">with 10 powers!</div>
-          </div>
-
-          <div className="stat">
-            <div className="stat-figure text-secondary">
-              <FewestPowersIcon />
-            </div>
-            <div className="stat-title">Hero with fewest powers</div>
-            <div className="stat-value text-secondary">Average Joe Blow</div>
-            <div className="stat-desc">we still love you!</div>
-          </div>
-          <div className="stat">
-            <div className="stat-figure text-accent">
-              < NumHeroesIcon />
-            </div>
-            <div className="stat-title"># Superheroes</div>
-            <div className="stat-value text-accent">10</div>
-            <div className="stat-desc">in database</div>
-          </div>
-          <div className="stat">
-            <div className="stat-figure text-neutral-content">
-              < PowerIcon />
-            </div>
-            <div className="stat-title"># Powers</div>
-            <div className="stat-value text-neutral-content">4</div>
-            <div className="stat-desc">in database</div>
-          </div>
+          <StatCard
+            icon={<MostPowersIcon />}
+            title="Hero with the most powers"
+            value="Superman"
+            statDesc="with 10 powers!"
+            color="text-primary"
+          />
+          <StatCard
+            icon={<FewestPowersIcon />}
+            title="Hero with fewest powers"
+            value="Average Joe Blow"
+            statDesc="we still love you!"
+            color="text-secondary"
+          />
+          <StatCard
+            icon={<NumHeroesIcon />}
+            title="# Superheroes"
+            value="10"
+            statDesc="in database"
+            color="text-accent"
+          />
+          <StatCard
+            icon={<PowerIcon />}
+            title="# Powers"
+            value="4"
+            statDesc="in database"
+            color="text-neutral-content"
+          />
         </article>
+
         {/* NEW Superheroes */}
         <article className="mt-10 mb-2 gap-6">
           <h1 className="stat-value">New Superheroes Added</h1>
