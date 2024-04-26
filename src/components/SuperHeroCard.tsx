@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
+
 function SuperHeroCard(props: {
+  id: number;
   name: string;
   firstName: string;
   lastName: string;
@@ -7,9 +10,16 @@ function SuperHeroCard(props: {
   numOfPowers: number;
 }) {
 
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/hero/${props.id}`);
+  };
+
   return (
     <>
-      <div className="card bg-base-100 shadow-xl p-2 min-h-56">
+      <div onClick={handleClick}
+        className="card cursor-pointer bg-base-100 shadow-xl p-2 min-h-56 hover:bg-base-300">
         <div className="card-body">
           <h2 className="card-title">{props.name}</h2>
           <span>

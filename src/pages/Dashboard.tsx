@@ -5,14 +5,29 @@ import MostPowersIcon from '../components/graphics/MostPowersIcon';
 import StatCard from '../components/StatCard';
 import usePowersData from "../hooks/usePowersData";
 import useSuperHeroesData from "../hooks/useSuperHeroesData";
+import { usePowerAPI, useSuperheroAPI } from '../hooks/useAPI';
 
 function Dashboard() {
 
-  // power related data:
-  const { powers, powersError, powersIsLoading } = usePowersData();
+  // API call to ALL powers
+  const {
+    powersFromQuery,
+    powersError,
+    powersIsLoading,
+  } = usePowerAPI();
 
-  // super heroes related data:
-  const { superHeroes, superHeroesError, superHeroesIsLoading } = useSuperHeroesData();
+  // API call to ALL heroes
+  const {
+    superHeroesFromQuery,
+    superHeroesError,
+    superHeroesIsLoading,
+  } = useSuperheroAPI();
+
+  // Convert list of powers to list of <Power>
+  const { powers } = usePowersData(powersFromQuery);
+
+  // Convert list of heroes to list of <Superhero>
+  const { superHeroes } = useSuperHeroesData(superHeroesFromQuery);
 
   // TODO make loading/error better looking :)
   if (powersIsLoading) return <div>Fetching powers...</div>;

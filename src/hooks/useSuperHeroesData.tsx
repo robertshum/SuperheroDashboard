@@ -1,30 +1,11 @@
 import { useState, useEffect } from "react";
-import { useQuery } from "react-query";
 import SuperHeroCard from '../components/SuperHeroCard';
+// import { useSuperheroAPI } from './useAPI';
 
-const API_LOC: string = import.meta.env.VITE_API_LOCATION;
-const API_PORT: number = import.meta.env.VITE_API_PORT;
-const API_SUFFIX: string = import.meta.env.VITE_API_SUFFIX;
-
-const getSuperHeroes = async () => {
-  console.log("fetching data");
-  const response = await fetch(`${API_LOC}:${API_PORT}${API_SUFFIX}SuperHero`);
-  const jsonResults = await response.json();
-  return jsonResults;
-};
-
-const useSuperHeroesData = () => {
+const useSuperHeroesData = (superHeroesFromQuery: { $id: string; $values: []; }) => {
 
   // update superheroes
-  const [superHeroes, setSuperHeroes] = useState([]);
-
-  // get powers from API call
-  const {
-    data: superHeroesFromQuery,
-    error: superHeroesError,
-    isLoading: superHeroesIsLoading,
-    refetch: superHeroesRefetch
-  } = useQuery("superHeroesData", getSuperHeroes);
+  const [superHeroes, setSuperHeroes] = useState<any>([]);
 
   // use powers to populate cards on UI
   useEffect(() => {
@@ -42,6 +23,7 @@ const useSuperHeroesData = () => {
         return (
           <div key={x.id}>
             <SuperHeroCard
+              id={x.id}
               name={x.name}
               firstName={x.firstName}
               lastName={x.lastName}
@@ -57,12 +39,8 @@ const useSuperHeroesData = () => {
   }, [superHeroesFromQuery]);
 
   return {
-    superHeroesRefetch,
-    superHeroes,
-    superHeroesError,
-    superHeroesIsLoading
+    superHeroes
   };
-
 };
 
 export default useSuperHeroesData;

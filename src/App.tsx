@@ -6,6 +6,8 @@ import './App.css';
 import Dashboard from './pages/Dashboard';
 import Powers from './pages/Powers';
 import Superheroes from './pages/Superheroes';
+import Power from './pages/Power';
+import Superhero from './pages/Superhero';
 import Navigation from './components/Navigation';
 
 function App() {
@@ -17,6 +19,8 @@ function App() {
         <Route path="/" element={<Dashboard />} />
         <Route path="/powers" element={<Powers />} />
         <Route path="/superheroes" element={<Superheroes />} />
+        <Route path="/power/:powerId" element={<Power />} />
+        <Route path="/hero/:superHeroId" element={<Superhero />} />
       </Routes>
       <Footer />
     </>
