@@ -1,12 +1,16 @@
 function StatCard(props: {
-  icon: JSX.Element;
+  // the icon element itself
+  icon: JSX.Element; 
   title: string;
   value: string;
   statDesc: string;
   color: string;
 }) {
 
+  // the color of the icon
   const iconClassName = `stat-figure ${props.color}`;
+
+  // the color of the value
   const valueClassName = `stat-value ${props.color}`;
 
   return (

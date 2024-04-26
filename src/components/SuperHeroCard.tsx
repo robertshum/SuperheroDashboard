@@ -1,24 +1,31 @@
-function SuperHeroCard() {
-
-  //TODO fill out logic here
-  const name = "Superman";
-  const firstName = "Clark";
-  const lastName = "Kent";
-  const description = "What's that in the sky?  Is it a plane?  Is it a Bird?";
-  const numOfPowers = 4;
+function SuperHeroCard(props: {
+  name: string;
+  firstName: string;
+  lastName: string;
+  place: string;
+  description: string;
+  numOfPowers: number;
+}) {
 
   return (
     <>
-      <div className="card bg-base-100 shadow-xl p-2">
+      <div className="card bg-base-100 shadow-xl p-2 min-h-56">
         <div className="card-body">
-          <h2 className="card-title">{name}</h2>
+          <h2 className="card-title">{props.name}</h2>
           <span>
-            <div className="badge badge-primary mr-0.5">{firstName}</div>
-            <div className="badge badge-secondary">{lastName}</div>
+            <div className="badge badge-primary mr-0.5">{props.firstName}</div>
+            <div className="badge badge-secondary">{props.lastName}</div>
           </span>
-          <p>{description}</p>
+          <p className="line-clamp-2">{props.description}</p>
           <div className="card-actions justify-start">
-            <div className="badge badge-outline">{numOfPowers} {numOfPowers > 1 ? "powers" : "power"}</div>
+            <span>
+              <div className="badge badge-outline mr-2">
+                {props.numOfPowers} {props.numOfPowers > 1 ? "powers" : "power"}
+              </div>
+              <div className="badge badge-neutral">
+                {props.place}
+              </div>
+            </span>
           </div>
         </div>
       </div>
