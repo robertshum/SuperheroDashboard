@@ -7,6 +7,7 @@ const API_PORT: number = import.meta.env.VITE_API_PORT;
 const API_SUFFIX: string = import.meta.env.VITE_API_SUFFIX;
 
 const getPowers = async () => {
+  console.log("fetching data");
   const response = await fetch(`${API_LOC}:${API_PORT}${API_SUFFIX}Power`);
   const jsonResults = await response.json();
   return jsonResults;
