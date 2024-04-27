@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import SuperHeroCard from '../components/SuperHeroCard';
 // import { useSuperheroAPI } from './useAPI';
 
-const useSuperHeroesData = (superHeroesFromQuery: { $id: string; $values: []; }) => {
+const useSuperHeroesData = (superHeroesFromQuery: SuperheroesData) => {
 
   // update superheroes
   const [superHeroes, setSuperHeroes] = useState<any>([]);

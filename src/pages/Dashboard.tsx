@@ -6,6 +6,7 @@ import StatCard from '../components/StatCard';
 import usePowersData from "../hooks/usePowersData";
 import useSuperHeroesData from "../hooks/useSuperHeroesData";
 import { usePowerAPI, useSuperheroAPI } from '../hooks/useAPI';
+import { useAnalytics } from '../hooks/useAnalytics';
 
 function Dashboard() {
 
@@ -24,10 +25,22 @@ function Dashboard() {
   } = useSuperheroAPI();
 
   // Convert list of powers to list of <Power>
-  const { powers } = usePowersData(powersFromQuery);
+  const { powers } = usePowersData(powersFromQuery as PowersData);
 
   // Convert list of heroes to list of <Superhero>
-  const { superHeroes } = useSuperHeroesData(superHeroesFromQuery);
+  const { superHeroes } = useSuperHeroesData(superHeroesFromQuery as SuperheroesData);
+
+  // perform basic analytics.
+  const {
+    mostPowers,
+    fewestPowers,
+    numPowers,
+    numHeroes
+  } = useAnalytics(powersFromQuery as PowersData, superHeroesFromQuery as SuperheroesData);
+
+  const mostPowerStr = `with ${mostPowers.num} ${mostPowers.num <= 1 ? "Power!" : "powers!"}`;
+
+  const fewestPowerStr = `with ${fewestPowers.num} ${fewestPowers.num <= 1 ? "Power." : "powers."}  We still love you!`;
 
   // TODO make loading/error better looking :)
   if (powersIsLoading) return <div>Fetching powers...</div>;
@@ -44,28 +57,28 @@ function Dashboard() {
           <StatCard
             icon={<MostPowersIcon />}
             title="Hero with the most powers"
-            value="Superman"
-            statDesc="with 10 powers!"
+            value={mostPowers.name}
+            statDesc={mostPowerStr}
             color="text-primary"
           />
           <StatCard
             icon={<FewestPowersIcon />}
             title="Hero with fewest powers"
-            value="Average Joe Blow"
-            statDesc="we still love you!"
+            value={fewestPowers.name}
+            statDesc={fewestPowerStr}
             color="text-secondary"
           />
           <StatCard
             icon={<NumHeroesIcon />}
             title="# Superheroes"
-            value="10"
+            value={numHeroes.toString()}
             statDesc="in database"
             color="text-accent"
           />
           <StatCard
             icon={<PowerIcon />}
             title="# Powers"
-            value="4"
+            value={numPowers.toString()}
             statDesc="in database"
             color="text-neutral-content"
           />
@@ -74,17 +87,16 @@ function Dashboard() {
         {/* NEW Superheroes */}
         <article className="mt-10 mb-2 gap-6">
           <h1 className="stat-value">New Superheroes Added</h1>
-          {/* list goes here */}
           <div className="grid lg:grid-cols-6  md:grid-cols-3 grid-cols-1 mt-1 mb-1 gap-3">
-            {/* hero... TODO map out index*/}
+            {/*List of superhero elements*/}
             {superHeroes}
           </div>
         </article>
+        {/* NEW Powers */}
         <article className="mt-10 mb-2 gap-6">
           <h1 className="stat-value">New Powers Added</h1>
-          {/* list goes here */}
           <div className="grid lg:grid-cols-6  md:grid-cols-3 grid-cols-1 mt-1 mb-1 gap-3">
-            {/* list of <PowerCard> gets rendered here*/}
+            {/*List of power elements*/}
             {powers}
           </div>
         </article>

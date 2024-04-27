@@ -29,7 +29,7 @@ export const useSuperheroAPI = (id?: number) => {
     error: superHeroesError,
     isLoading: superHeroesIsLoading,
     refetch: superHeroesRefetch
-  } = useQuery(queryKey, () => getSuperHeroes(id));
+  } = useQuery<SuperheroesData | SuperheroData>(queryKey, () => getSuperHeroes(id));
 
   return {
     // superheroes
@@ -50,7 +50,7 @@ export const usePowerAPI = (id?: number) => {
     error: powersError,
     isLoading: powersIsLoading,
     refetch: powersRefetch
-  } = useQuery(queryKey, () => getPowers(id));
+  } = useQuery<PowersData | PowerData>(queryKey, () => getPowers(id));
 
   return {
     // powers

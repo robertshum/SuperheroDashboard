@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import PowerCard from '../components/PowerCard';
 
-const usePowersData = (powersFromQuery: { $id: string; $values: []; }) => {
+const usePowersData = (powersFromQuery: PowersData) => {
 
   // update powers
   const [powers, setPowers] = useState<any>([]);
