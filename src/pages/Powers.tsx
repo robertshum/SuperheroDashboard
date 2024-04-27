@@ -20,14 +20,13 @@ function Powers() {
 
   return (
     <div className="flex flex-col">
-      <div className="flex-1 overflow-y-auto md:pt-4 pt-4 px-6">
-
-        {/* NEW Powers */}
+      <div className="flex-1 overflow-y-auto sm:pt-2 md:pt-2 pt-4 pb-4 px-6">
         <article className="mt-10 mb-2 gap-6">
           <h1 className="stat-value">Powers</h1>
+            {/* NEW Powers */}
           <Link to="/power/add"
             className="btn btn-ghost text-xl outline-dashed mt-5 mb-5">+ Add New Power</Link>
-          <div className="grid lg:grid-cols-6  md:grid-cols-3 grid-cols-1 mt-1 mb-1 gap-3">
+          <div className="grid lg:grid-cols-6 md:grid-cols-3 grid-cols-1 mt-1 mb-1 gap-3">
             {/*List of power elements*/}
             {powers}
           </div>

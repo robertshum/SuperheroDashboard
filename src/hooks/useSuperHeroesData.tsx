@@ -1,8 +1,13 @@
 import { useState, useEffect } from "react";
 import SuperHeroCard from '../components/SuperHeroCard';
-// import { useSuperheroAPI } from './useAPI';
+import { useNavigate } from "react-router-dom";
 
-const useSuperHeroesData = (superHeroesFromQuery: SuperheroesData, cap?: number) => {
+const useSuperHeroesData = (
+  superHeroesFromQuery: SuperheroesData,
+  showEdit: boolean,
+  cap?: number) => {
+
+  const navigate = useNavigate();
 
   // update superheroes
   const [superHeroes, setSuperHeroes] = useState<any>([]);
@@ -20,6 +25,15 @@ const useSuperHeroesData = (superHeroesFromQuery: SuperheroesData, cap?: number)
         reversedHeroes = reversedHeroes.slice(0, cap);
       }
 
+      // navigation for the superhero cards
+      const handleView = (id: number) => {
+        navigate(`/hero/${id}`);
+      };
+
+      const handleEdit = (id: number) => {
+        navigate(`/hero/edit/${id}`);
+      };
+
       const mappedSuperHeroes = reversedHeroes.map((
         x: SuperheroData) => {
         return (
@@ -32,6 +46,9 @@ const useSuperHeroesData = (superHeroesFromQuery: SuperheroesData, cap?: number)
               description={x.description}
               place={x.place}
               numOfPowers={x.powers.$values.length}
+              showEdit={showEdit}
+              viewClickHandler={() => handleView(x.id)}
+              editClickHandler={() => handleEdit(x.id)}
             />
           </div>
         );

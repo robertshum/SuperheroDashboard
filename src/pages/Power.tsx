@@ -21,7 +21,7 @@ const Power = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="flex-1 overflow-y-auto md:pt-2 pt-2 pb-2 px-2  ">
+      <div className="flex-1 overflow-y-auto sm:pt-2 md:pt-2 pt-4 pb-4 px-6">
         <div className="card bg-base-100 shadow-xl p-2 min-h-30">
           <div className="card-body">
             {/* name */}
