@@ -25,10 +25,10 @@ function Dashboard() {
   } = useSuperheroAPI();
 
   // Convert list of powers to list of <Power>
-  const { powers } = usePowersData(powersFromQuery as PowersData);
+  const { powers } = usePowersData(powersFromQuery as PowersData, 6);
 
   // Convert list of heroes to list of <Superhero>
-  const { superHeroes } = useSuperHeroesData(superHeroesFromQuery as SuperheroesData);
+  const { superHeroes } = useSuperHeroesData(superHeroesFromQuery as SuperheroesData, 6);
 
   // perform basic analytics.
   const {

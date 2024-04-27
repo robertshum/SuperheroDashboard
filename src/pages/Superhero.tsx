@@ -14,6 +14,9 @@ const Superhero = () => {
     superHeroesIsLoading,
   } = useSuperheroAPI(Number(superHeroId));
 
+  // Ensure superHeroesFromQuery is of type SuperheroData
+  const hero = superHeroesFromQuery as SuperheroData;
+
   // TODO make loading/error better looking :)
   if (superHeroesIsLoading) return <div>Fetching powers...</div>;
   if (superHeroesError) return <div>An error occured fetching powers</div>;
@@ -25,22 +28,22 @@ const Superhero = () => {
           className="card bg-base-100 shadow-xl p-2 min-h-56">
           <div className="card-body">
             {/* name */}
-            <h2 className="card-title text-3xl">{superHeroesFromQuery.name}</h2>
+            <h2 className="card-title text-3xl">{hero.name}</h2>
 
             {/* fname */}
-            <h2 className="line-clamp-1 card-title font-semibold flex items-center">First: <span className="ml-2 badge badge-primary font-light">{superHeroesFromQuery.firstName}</span></h2>
+            <h2 className="line-clamp-1 card-title font-semibold flex items-center">First: <span className="ml-2 badge badge-primary font-light">{hero.firstName}</span></h2>
 
             {/* lname */}
-            <h2 className="line-clamp-1 card-title font-semibold flex items-center">Last: <span className="ml-2 badge badge-secondary font-light">{superHeroesFromQuery.lastName}</span></h2>
+            <h2 className="line-clamp-1 card-title font-semibold flex items-center">Last: <span className="ml-2 badge badge-secondary font-light">{hero.lastName}</span></h2>
 
             {/* location */}
-            <h2 className="line-clamp-1 card-title font-semibold flex items-center">Location: <span className="ml-2 badge badge-neutral font-light">{superHeroesFromQuery.place}</span></h2>
+            <h2 className="line-clamp-1 card-title font-semibold flex items-center">Location: <span className="ml-2 badge badge-neutral font-light">{hero.place}</span></h2>
 
             {/* description */}
-            <p className="break-normal font-semibold flex items-center">{superHeroesFromQuery.description}</p>
+            <p className="break-normal font-semibold flex items-center">{hero.description}</p>
             <div className="card-actions justify-start">
               <span>
-                {superHeroesFromQuery.powers && superHeroesFromQuery.powers.$values.map((x: { id: number; tag: string; }) => {
+                {hero.powers && hero.powers.$values.map((x: { id: number; tag: string; }) => {
                   return (
                     <div
                       onClick={() => navigate(`/power/${x.id}`)}
