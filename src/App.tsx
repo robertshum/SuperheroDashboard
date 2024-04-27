@@ -9,6 +9,8 @@ import Superheroes from './pages/Superheroes';
 import Power from './pages/Power';
 import Superhero from './pages/Superhero';
 import Navigation from './components/Navigation';
+import AddPower from './pages/AddPower';
+import EditPower from './pages/EditPower';
 
 function App() {
 
@@ -20,6 +22,8 @@ function App() {
         <Route path="/powers" element={<Powers />} />
         <Route path="/superheroes" element={<Superheroes />} />
         <Route path="/power/:powerId" element={<Power />} />
+        <Route path="/power/edit/:powerId" element={<EditPower />} />
+        <Route path="/power/add/" element={<AddPower />} />
         <Route path="/hero/:superHeroId" element={<Superhero />} />
       </Routes>
       <Footer />

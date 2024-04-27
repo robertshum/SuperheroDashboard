@@ -25,7 +25,7 @@ function Dashboard() {
   } = useSuperheroAPI();
 
   // Convert list of powers to list of <Power>
-  const { powers } = usePowersData(powersFromQuery as PowersData, 6);
+  const { powers } = usePowersData(powersFromQuery as PowersData, false, 6);
 
   // Convert list of heroes to list of <Superhero>
   const { superHeroes } = useSuperHeroesData(superHeroesFromQuery as SuperheroesData, 6);
@@ -50,7 +50,7 @@ function Dashboard() {
 
   return (
     <div className="flex flex-col">
-      <div className="flex-1 overflow-y-auto md:pt-4 pt-4 px-6  ">
+      <div className="flex-1 overflow-y-auto md:pt-4 pt-4 px-6">
 
         {/* 4 Mini stats */}
         <article className="grid lg:grid-cols-4  md:grid-cols-2 grid-cols-1 mt-2 mb-2 gap-6">
