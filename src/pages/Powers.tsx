@@ -13,7 +13,7 @@ function Powers() {
     powersIsLoading,
   } = usePowerAPI();
 
-  // TODO? temp handle of tracking user input
+  // tracking user input
   const [filter, setFilter] = useState("");
 
   // track filtered powers
@@ -40,7 +40,7 @@ function Powers() {
       return power.tag.toLowerCase().includes(filter.toLowerCase());
     });
 
-    // update filterd powers state
+    // update filtered powers state
     setFilteredPowers((prev: PowersData) => {
       // Otherwise, update the properties and return the updated state
       return {
@@ -66,14 +66,19 @@ function Powers() {
       <div className="flex-1 overflow-y-auto sm:pt-2 md:pt-2 pt-4 pb-4 px-6">
         <article className="mt-10 mb-2 gap-6">
           <h1 className="stat-value">Powers</h1>
-          {/* NEW Powers */}
-          <Link to="/power/add"
-            className="btn btn-ghost text-xl outline-dashed mt-5 mb-5">+ Add New Power</Link>
-          <FilterForm
-            labelText="Filter by power"
-            placeholderText="Flight"
-            onChange={handleFilterInput}
-          />
+
+          <div className="flex flex-row items-end gap-5 flex-wrap mt-5">
+            {/* NEW Powers */}
+            <Link to="/power/add"
+              className="btn btn-md btn-ghost text-xl outline-dashed">+ Add New Power</Link>
+              {/* Filter power */}
+            <FilterForm
+              labelText="Filter by power"
+              placeholderText="Flight"
+              onChange={handleFilterInput}
+            />
+          </div>
+
           <div className="grid lg:grid-cols-6 md:grid-cols-3 grid-cols-1 mt-1 mb-1 gap-3">
             {/*List of power elements*/}
             {powers}
