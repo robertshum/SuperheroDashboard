@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, MouseEvent } from "react";
+import { useState, ChangeEvent, MouseEvent, FormEvent } from "react";
 import { usePostPowerAPI } from "../hooks/useAPI";
 import AddEditPowerForm from "../components/AddEditPowerForm";
 
@@ -21,7 +21,8 @@ const AddPower = () => {
   };
 
   // submit, post req, redirect
-  const handleOnSubmit = (event: MouseEvent<HTMLButtonElement>) => {
+  const handleOnSubmit = (
+    event: MouseEvent<HTMLButtonElement> | FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     //start adding power
