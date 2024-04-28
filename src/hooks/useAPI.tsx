@@ -1,4 +1,6 @@
-import { useQuery } from "react-query";
+import { useQuery, useMutation } from "react-query";
+import { useNavigate } from 'react-router-dom';
+
 const API_LOC: string = import.meta.env.VITE_API_LOCATION;
 const API_PORT: number = import.meta.env.VITE_API_PORT;
 const API_SUFFIX: string = import.meta.env.VITE_API_SUFFIX;
@@ -17,6 +19,40 @@ const getSuperHeroes = async (id?: number) => {
     await fetch(`${API_LOC}:${API_PORT}${API_SUFFIX}${heroSuffix}`);
   const jsonResults = await response.json();
   return jsonResults;
+};
+
+const postPower = async (input: PowerData) => {
+  const url = `${API_LOC}:${API_PORT}${API_SUFFIX}Power`;
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(input),
+  });
+
+  if (!response.ok) {
+    console.log("error creating a new power");
+  }
+
+  return await response.json();
+};
+
+const patchPower = async (input: PowerData) => {
+  const url = `${API_LOC}:${API_PORT}${API_SUFFIX}Power`;
+  const response = await fetch(url, {
+    method: "PUT",
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(input),
+  });
+
+  if (!response.ok) {
+    console.log("error modifying a power");
+  }
+
+  return await response.json();
 };
 
 export const useSuperheroAPI = (id?: number) => {
@@ -58,5 +94,53 @@ export const usePowerAPI = (id?: number) => {
     powersError,
     powersIsLoading,
     powersRefetch,
+  };
+};
+
+export const usePostPowerAPI = () => {
+
+  const navigate = useNavigate();
+  const {
+    mutate: addPower,
+    isLoading: addPowerIsLoading,
+    error: addPowerError
+  } = useMutation(postPower, {
+    onSuccess: () => {
+      navigate("/powers");
+    },
+    onError: (error) => {
+      // Error actions
+      console.log("error occured mutating w/ react query.", error);
+    },
+  });
+
+  return {
+    addPower,
+    addPowerIsLoading,
+    addPowerError
+  };
+};
+
+export const usePatchPowerAPI = () => {
+
+  const navigate = useNavigate();
+  const {
+    mutate: editPower,
+    isLoading: editPowerIsLoading,
+    error: editPowerError
+  } = useMutation(patchPower, {
+    onSuccess: () => {
+      navigate("/powers");
+    },
+    onError: (error) => {
+      // Error actions
+      console.log("error occured mutating w/ react query.", error);
+    },
+  });
+
+  return {
+    editPower,
+    editPowerIsLoading,
+    editPowerError
   };
 };

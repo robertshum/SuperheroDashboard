@@ -5,7 +5,7 @@ type PowersData = {
 };
 
 type PowerData = {
-  id: number;
+  id?: number;
   tag: string;
   description: string;
 };
