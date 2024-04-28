@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useState, ChangeEvent, MouseEvent, useEffect } from "react";
+import { useState, ChangeEvent, MouseEvent, useEffect, FormEvent } from "react";
 import { usePatchPowerAPI, usePowerAPI } from '../hooks/useAPI';
 import AddEditPowerForm from '../components/AddEditPowerForm';
 
@@ -43,7 +43,8 @@ const EditPower = () => {
   };
 
   // submit, post req, redirect
-  const handleOnSubmit = (event: MouseEvent<HTMLButtonElement>) => {
+  const handleOnSubmit = (
+    event: MouseEvent<HTMLButtonElement> | FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     //start adding power
@@ -56,7 +57,7 @@ const EditPower = () => {
 
   // disabled button
   const isDisabled = !powerName || !description;
-  
+
   // TODO make loading/error better looking :)
   if (powersError) return <div>fetching power...</div>;
   if (powersIsLoading) return <div>error fetching power...</div>;
