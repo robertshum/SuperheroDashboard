@@ -2,6 +2,7 @@ import { ChangeEvent, FormEvent, MouseEvent, useEffect, useState } from "react";
 import AddEditSuperheroForm from "../components/AddEditSuperheroForm";
 import PowerLookup from "../components/PowerLookup";
 import { usePowerAPI } from "../hooks/useAPI";
+import {usePostHeroAPI} from "../hooks/useAPI";
 
 const AddSuperhero = () => {
 
@@ -17,6 +18,10 @@ const AddSuperhero = () => {
   const [selectedJsxPowers, setSelectedJsxPowers] = useState<JSX.Element[]>([]);
   const [powerMapping, setPowerMapping]
     = useState<{ id: number; tag: string; }[]>([]);
+
+  // custom hook to save
+  const { addHero, addHeroIsLoading, addHeroError } = usePostHeroAPI();
+
 
   // API call to ALL powers;
   const {
@@ -66,7 +71,7 @@ const AddSuperhero = () => {
       return <div
         onClick={() => removePowerFromSelection(x)}
         key={x}
-        className="badge badge-info">{powerName.tag}
+        className="badge badge-info hover:badge-outline cursor-pointer">{powerName.tag}
       </div>;
     });
 
@@ -75,7 +80,7 @@ const AddSuperhero = () => {
 
   }, [selectedPowers]);
 
-  const isDisabled = false;
+  const isDisabled = !name || !firstName || !lastName || !place || !description;
 
   // track name changes
   const handleOnChangeName = (e: ChangeEvent<HTMLInputElement>) => {
@@ -112,6 +117,15 @@ const AddSuperhero = () => {
     event: MouseEvent<HTMLButtonElement> | FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    //start adding power
+    addHero({
+      name: name,
+      firstName: firstName,
+      lastName: lastName,
+      place: place,
+      description: description,
+      powerIds: selectedPowers
+    });
   };
 
   return (

@@ -82,7 +82,7 @@ const PowerLookup = (props: PowerLookupProps) => {
         />
       </div>
 
-      <div className="grid lg:grid-cols-6 md:grid-cols-3 grid-cols-1 mt-1 mb-1 gap-3">
+      <div className="grid lg:grid-cols-6 md:grid-cols-3 grid-cols-1 my-4 gap-3">
         {/*List of power elements*/}
         {powers}
       </div>

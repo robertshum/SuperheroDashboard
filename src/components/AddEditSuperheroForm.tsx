@@ -72,17 +72,22 @@ const AddEditSuperheroForm = (props: AddEditSuperheroFormProps) => {
                   className="textarea textarea-bordered h-24 min-w-96" placeholder="Smooth talking space captain."></textarea>
               </label>
 
-              {/* TODO show powers */}
-              <div>
-                <h1 className="stat-value">Superhero Powers</h1>
+              {/* Superhero Powers */}
+              <div className="mt-2 mb-2">
+                <h1 className="stat-value my-4">Superhero Powers</h1>
                 <div className="grid lg:grid-cols-6 md:grid-cols-3 grid-cols-1 mt-1 mb-1 gap-1">
-                  {/* content */}
+                  {/* selected powers */}
                   {props.selectedPowers}
                 </div>
               </div>
             </div>
 
-
+            {/* Create */}
+            <button
+              type="submit"
+              disabled={props.isButtonDisabled}
+              onClick={props.handleOnSubmit}
+              className="btn btn-md mt-3 mb-8 btn-outline text-xl">{props.buttonName}</button>
 
             {/* TODO list powers */}
             {props.children}
@@ -92,13 +97,6 @@ const AddEditSuperheroForm = (props: AddEditSuperheroFormProps) => {
               
               // setSelectedPowers={props.setSelectedPowers}
             /> */}
-
-            {/* Create */}
-            <button
-              type="submit"
-              disabled={props.isButtonDisabled}
-              onClick={props.handleOnSubmit}
-              className="btn btn-md mt-5 btn-ghost text-md">{props.buttonName}</button>
           </form>
 
         </article>

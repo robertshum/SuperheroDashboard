@@ -86,13 +86,11 @@ export const usePowersSelectionData = (
         });
       };
 
-
-
       const mappedPowers = reversedPowers.map((x: PowerData) => {
         return <div
           onClick={() => addPower(x.id)}
           key={x.id}
-          className="badge badge-info">{x.tag}
+          className="badge badge-info hover:badge-outline cursor-pointer">+ {x.tag}
         </div>;
       });
       setPowers(mappedPowers);

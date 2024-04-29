@@ -26,6 +26,16 @@ type SuperheroData = {
   powers: { $id: number; $values: []; };
 };
 
+// matches the fields in API for POST
+type SuperheroDataForm = {
+  name: string;
+  firstName: string;
+  lastName: string;
+  place: string;
+  description: string;
+  powerIds: number[];
+};
+
 // Analytics
 type FewestPowers = {
   name: string;

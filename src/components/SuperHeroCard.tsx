@@ -20,7 +20,7 @@ function SuperHeroCard(props: {
           <div className="badge badge-primary mr-0.5">{props.firstName}</div>
           <div className="badge badge-secondary">{props.lastName}</div>
         </span>
-        <p className="line-clamp-2">{props.description}</p>
+        <p className="line-clamp-1">{props.description}</p>
         <div className="card-actions justify-start">
           <span>
             <div className="badge badge-outline mr-2">

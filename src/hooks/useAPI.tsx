@@ -38,6 +38,23 @@ const postPower = async (input: PowerData) => {
   return await response.json();
 };
 
+const postHero = async (input: SuperheroDataForm) => {
+  const url = `${API_LOC}:${API_PORT}${API_SUFFIX}Superhero`;
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(input),
+  });
+
+  if (!response.ok) {
+    console.log("error creating a new power");
+  }
+
+  return await response.json();
+};
+
 const patchPower = async (input: PowerData) => {
   const url = `${API_LOC}:${API_PORT}${API_SUFFIX}Power`;
   const response = await fetch(url, {
@@ -73,6 +90,30 @@ export const useSuperheroAPI = (id?: number) => {
     superHeroesError,
     superHeroesIsLoading,
     superHeroesRefetch
+  };
+};
+
+export const usePostHeroAPI = () => {
+
+  const navigate = useNavigate();
+  const {
+    mutate: addHero,
+    isLoading: addHeroIsLoading,
+    error: addHeroError
+  } = useMutation(postHero, {
+    onSuccess: () => {
+      navigate("/superheroes");
+    },
+    onError: (error) => {
+      // Error actions
+      console.log("error occured mutating w/ react query.", error);
+    },
+  });
+
+  return {
+    addHero,
+    addHeroIsLoading,
+    addHeroError
   };
 };
 
