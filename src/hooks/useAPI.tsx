@@ -89,6 +89,32 @@ const patchHero = async (input: SuperheroDataForm) => {
   return await response.json();
 };
 
+const deletePower = async (id: number) => {
+  const url = `${API_LOC}:${API_PORT}${API_SUFFIX}Power/${id}`;
+  const response = await fetch(url, {
+    method: "DELETE"
+  });
+
+  if (!response.ok) {
+    console.log("error deleting a power");
+  }
+
+  return await response.json();
+};
+
+const deleteHero = async (id: number) => {
+  const url = `${API_LOC}:${API_PORT}${API_SUFFIX}Superhero/${id}`;
+  const response = await fetch(url, {
+    method: "DELETE"
+  });
+
+  if (!response.ok) {
+    console.log("error deleting a hero");
+  }
+
+  return await response.json();
+};
+
 export const useSuperheroAPI = (id?: number) => {
 
   const queryKey = id === undefined ? "allHeroData" : "oneHeroData";
@@ -158,6 +184,30 @@ export const usePatchSuperheroAPI = () => {
   };
 };
 
+export const useDeleteSuperheroAPI = () => {
+
+  const navigate = useNavigate();
+  const {
+    mutate: removeHero,
+    isLoading: removeHeroIsLoading,
+    error: removeHeroError
+  } = useMutation(deleteHero, {
+    onSuccess: () => {
+      navigate("/superheroes");
+    },
+    onError: (error) => {
+      // Error actions
+      console.log("error occured mutating w/ react query.", error);
+    },
+  });
+
+  return {
+    removeHero,
+    removeHeroIsLoading,
+    removeHeroError
+  };
+};
+
 export const usePowerAPI = (id?: number) => {
 
   const queryKey = id === undefined ? "allPowerData" : "onePowerData";
@@ -224,5 +274,29 @@ export const usePatchPowerAPI = () => {
     editPower,
     editPowerIsLoading,
     editPowerError
+  };
+};
+
+export const useDeletePowerAPI = () => {
+
+  const navigate = useNavigate();
+  const {
+    mutate: removePower,
+    isLoading: removePowerIsLoading,
+    error: removePowerError
+  } = useMutation(deletePower, {
+    onSuccess: () => {
+      navigate("/powers");
+    },
+    onError: (error) => {
+      // Error actions
+      console.log("error occured mutating w/ react query.", error);
+    },
+  });
+
+  return {
+    removePower,
+    removePowerIsLoading,
+    removePowerError
   };
 };

@@ -4,6 +4,7 @@ import PowerLookup from "../components/PowerLookup";
 import { usePatchSuperheroAPI, usePowerAPI, useSuperheroAPI } from "../hooks/useAPI";
 import { useParams } from "react-router-dom";
 import Badge from "../components/Badge";
+import { useDeleteSuperheroAPI } from "../hooks/useAPI";
 
 const EditHero = () => {
 
@@ -40,6 +41,12 @@ const EditHero = () => {
     editHeroIsLoading,
     editHeroError
   } = usePatchSuperheroAPI();
+
+  const {
+    removeHero,
+    removeHeroIsLoading,
+    removeHeroError
+  } = useDeleteSuperheroAPI();
 
   // initial load
   useEffect(() => {
@@ -87,7 +94,7 @@ const EditHero = () => {
       if (!powerName) {
         powerName = { id: -1, tag: "undefined" };
       }
-      
+
       return (
         <Badge
           key={x}
@@ -108,6 +115,8 @@ const EditHero = () => {
   if (editHeroIsLoading) return <div>loading editing hero...</div>;
   if (powersError) return <div>loading power...</div>;
   if (powersIsLoading) return <div>loading powers...</div>;
+  if (removeHeroIsLoading) return <div>removing hero...</div>;
+  if (removeHeroError) return <div>removing hero...</div>;
 
   const isDisabled = !name || !firstName || !lastName || !place || !description;
 
@@ -163,10 +172,20 @@ const EditHero = () => {
     });
   };
 
+  // submit, delete req, redirect
+  const handleOnDelete = (
+    event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    //start deleting hero
+    removeHero(Number(superHeroId));
+  };
+
   return (
     <AddEditSuperheroForm
       titleName="Edit Superhero"
       buttonName="Confirm"
+      buttonDeleteName="Delete Hero"
       name={name}
       firstName={firstName}
       lastName={lastName}
@@ -179,6 +198,7 @@ const EditHero = () => {
       handleOnChangePlace={handleOnChangePlace}
       handleOnChangeDescription={handleOnChangeDescription}
       handleOnSubmit={handleOnSubmit}
+      handleOnDelete={handleOnDelete}
       selectedPowers={selectedJsxPowers}
     >
       {/* Composition, and all that jazz. */}

@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useState, ChangeEvent, MouseEvent, useEffect, FormEvent } from "react";
 import { usePatchPowerAPI, usePowerAPI } from '../hooks/useAPI';
 import AddEditPowerForm from '../components/AddEditPowerForm';
+import { useDeletePowerAPI } from '../hooks/useAPI';
 
 const EditPower = () => {
 
@@ -20,6 +21,12 @@ const EditPower = () => {
     editPower,
     editPowerIsLoading,
     editPowerError } = usePatchPowerAPI();
+
+  const {
+    removePower,
+    removePowerIsLoading,
+    removePowerError
+  } = useDeletePowerAPI();
 
   // initial load
   useEffect(() => {
@@ -55,6 +62,15 @@ const EditPower = () => {
     });
   };
 
+  // submit, delete req, redirect
+  const handleOnDelete = (
+    event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    //start deleting power
+    removePower(Number(powerId));
+  };
+
   // disabled button
   const isDisabled = !powerName || !description;
 
@@ -63,17 +79,21 @@ const EditPower = () => {
   if (powersIsLoading) return <div>error fetching power...</div>;
   if (editPowerError) return <div>editing power...</div>;
   if (editPowerIsLoading) return <div>error editing power...</div>;
+  if (removePowerIsLoading) return <div>removing power...</div>;
+  if (removePowerError) return <div>error removing power...</div>;
 
   return (
     <AddEditPowerForm
       titleName="Edit Power"
       buttonName="Confirm"
+      buttonDeleteName="Delete Power"
       powerName={powerName}
       description={description}
       isButtonDisabled={isDisabled}
       handleOnChangeName={handleOnChangeName}
       handleOnChangeDescription={handleOnChangeDescription}
       handleOnSubmit={handleOnSubmit}
+      handleOnDelete={handleOnDelete}
     />
   );
 };
