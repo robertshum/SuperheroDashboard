@@ -87,7 +87,7 @@ const EditHero = () => {
       if (!powerName) {
         powerName = { id: -1, tag: "undefined" };
       }
-      
+
       return (
         <Badge
           key={x}
@@ -163,10 +163,20 @@ const EditHero = () => {
     });
   };
 
+  // submit, delete req, redirect
+  const handleOnDelete = (
+    event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    //start deleting hero
+    console.log("delete hero");
+  };
+
   return (
     <AddEditSuperheroForm
       titleName="Edit Superhero"
       buttonName="Confirm"
+      buttonDeleteName="Delete Hero"
       name={name}
       firstName={firstName}
       lastName={lastName}
@@ -179,6 +189,7 @@ const EditHero = () => {
       handleOnChangePlace={handleOnChangePlace}
       handleOnChangeDescription={handleOnChangeDescription}
       handleOnSubmit={handleOnSubmit}
+      handleOnDelete={handleOnDelete}
       selectedPowers={selectedJsxPowers}
     >
       {/* Composition, and all that jazz. */}

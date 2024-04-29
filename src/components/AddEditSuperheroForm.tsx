@@ -4,6 +4,7 @@ import { ChangeEvent, FormEvent, MouseEvent } from "react";
 type AddEditSuperheroFormProps = {
   titleName: string;
   buttonName: string;
+  buttonDeleteName?: string;
   name: string;
   firstName: string;
   lastName: string;
@@ -16,6 +17,7 @@ type AddEditSuperheroFormProps = {
   handleOnChangePlace: (e: ChangeEvent<HTMLInputElement>) => void;
   handleOnChangeDescription: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   handleOnSubmit: (e: MouseEvent<HTMLButtonElement> | FormEvent<HTMLFormElement>) => void;
+  handleOnDelete?: (e: MouseEvent<HTMLButtonElement>) => void;
   selectedPowers: JSX.Element[];
   children: JSX.Element;
 };
@@ -78,12 +80,19 @@ const AddEditSuperheroForm = (props: AddEditSuperheroFormProps) => {
               </div>
             </div>
 
-            {/* Create */}
-            <button
-              type="submit"
-              disabled={props.isButtonDisabled}
-              onClick={props.handleOnSubmit}
-              className="btn btn-md mt-3 mb-8 btn-outline text-xl">{props.buttonName}</button>
+            <div className="inline-block">
+              {/* Create */}
+              <button
+                type="submit"
+                disabled={props.isButtonDisabled}
+                onClick={props.handleOnSubmit}
+                className="btn btn-md mt-3 mb-8 btn-outline text-xl mr-3">{props.buttonName}
+              </button>
+              {/* Delete */}
+              {props.buttonDeleteName && <button
+                onClick={props.handleOnDelete}
+                className="btn btn-md mt-3 mb-8 btn-outline text-xl">{props.buttonDeleteName}</button>}
+            </div>
 
             {/* List available powers */}
             {props.children}

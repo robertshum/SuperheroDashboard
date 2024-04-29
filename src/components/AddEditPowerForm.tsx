@@ -3,12 +3,14 @@ import { ChangeEvent, FormEvent, MouseEvent } from "react";
 type AddEditPowerFormProps = {
   titleName: string;
   buttonName: string;
+  buttonDeleteName?: string;
   powerName: string;
   description: string;
   isButtonDisabled: boolean;
   handleOnChangeName: (e: ChangeEvent<HTMLInputElement>) => void;
   handleOnChangeDescription: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   handleOnSubmit: (e: MouseEvent<HTMLButtonElement> | FormEvent<HTMLFormElement>) => void;
+  handleOnDelete?: (e: MouseEvent<HTMLButtonElement>) => void;
 };
 
 const AddEditPowerForm = (props: AddEditPowerFormProps) => {
@@ -36,12 +38,19 @@ const AddEditPowerForm = (props: AddEditPowerFormProps) => {
                   onChange={props.handleOnChangeDescription}
                   className="textarea textarea-bordered h-24 min-w-96" placeholder="Zap enemies with laser eyes."></textarea>
               </label>
-              {/* Create */}
-              <button
-                type="submit"
-                disabled={props.isButtonDisabled}
-                onClick={props.handleOnSubmit}
-                className="btn btn-md btn-ghost text-md">{props.buttonName}</button>
+
+              <div className="inline-block">
+                {/* Create */}
+                <button
+                  type="submit"
+                  disabled={props.isButtonDisabled}
+                  onClick={props.handleOnSubmit}
+                  className="btn btn-md btn-ghost text-md mr-3">{props.buttonName}</button>
+                {/* Delete */}
+                {props.buttonDeleteName && <button
+                  onClick={props.handleOnDelete}
+                  className="btn btn-md btn-ghost text-md">{props.buttonDeleteName}</button>}
+              </div>
             </div>
           </form>
         </article>

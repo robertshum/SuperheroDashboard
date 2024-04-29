@@ -55,6 +55,15 @@ const EditPower = () => {
     });
   };
 
+  // submit, delete req, redirect
+  const handleOnDelete = (
+    event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    //start deleting power
+    console.log("delete power");
+  };
+
   // disabled button
   const isDisabled = !powerName || !description;
 
@@ -68,12 +77,14 @@ const EditPower = () => {
     <AddEditPowerForm
       titleName="Edit Power"
       buttonName="Confirm"
+      buttonDeleteName="Delete Power"
       powerName={powerName}
       description={description}
       isButtonDisabled={isDisabled}
       handleOnChangeName={handleOnChangeName}
       handleOnChangeDescription={handleOnChangeDescription}
       handleOnSubmit={handleOnSubmit}
+      handleOnDelete={handleOnDelete}
     />
   );
 };
