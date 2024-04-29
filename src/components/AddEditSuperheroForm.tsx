@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, FormEvent, MouseEvent, SetStateAction } from "react";
+import { ChangeEvent, FormEvent, MouseEvent } from "react";
 
 
 type AddEditSuperheroFormProps = {
@@ -16,10 +16,7 @@ type AddEditSuperheroFormProps = {
   handleOnChangePlace: (e: ChangeEvent<HTMLInputElement>) => void;
   handleOnChangeDescription: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   handleOnSubmit: (e: MouseEvent<HTMLButtonElement> | FormEvent<HTMLFormElement>) => void;
-  filteredPowers: PowersData;
-  setFilteredPowers: Dispatch<SetStateAction<PowersData>>;
   selectedPowers: JSX.Element[];
-  // setSelectedPowers: Dispatch<SetStateAction<number[]>>;
   children: JSX.Element;
 };
 
@@ -31,7 +28,6 @@ const AddEditSuperheroForm = (props: AddEditSuperheroFormProps) => {
         <article className="mt-10 mb-2 gap-6">
           <h1 className="stat-value">{props.titleName}</h1>
           <form onSubmit={props.handleOnSubmit}>
-            {/* <div className="flex flex-col min-w-3 items-start gap-5 flex-wrap mt-5"> */}
             <div className="grid grid-cols-auto-fit min-w-3 items-start gap-5 flex-wrap mt-5">
               {/* Name */}
               <label
@@ -89,14 +85,9 @@ const AddEditSuperheroForm = (props: AddEditSuperheroFormProps) => {
               onClick={props.handleOnSubmit}
               className="btn btn-md mt-3 mb-8 btn-outline text-xl">{props.buttonName}</button>
 
-            {/* TODO list powers */}
+            {/* List available powers */}
             {props.children}
-            {/* <PowerLookup
-              filteredPowers={props.filteredPowers}
-              setFilteredPowers={props.setFilteredPowers}
-              
-              // setSelectedPowers={props.setSelectedPowers}
-            /> */}
+
           </form>
 
         </article>

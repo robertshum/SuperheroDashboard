@@ -72,6 +72,23 @@ const patchPower = async (input: PowerData) => {
   return await response.json();
 };
 
+const patchHero = async (input: SuperheroDataForm) => {
+  const url = `${API_LOC}:${API_PORT}${API_SUFFIX}Superhero`;
+  const response = await fetch(url, {
+    method: "PUT",
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(input),
+  });
+
+  if (!response.ok) {
+    console.log("error modifying a power");
+  }
+
+  return await response.json();
+};
+
 export const useSuperheroAPI = (id?: number) => {
 
   const queryKey = id === undefined ? "allHeroData" : "oneHeroData";
@@ -114,6 +131,30 @@ export const usePostHeroAPI = () => {
     addHero,
     addHeroIsLoading,
     addHeroError
+  };
+};
+
+export const usePatchSuperheroAPI = () => {
+
+  const navigate = useNavigate();
+  const {
+    mutate: editHero,
+    isLoading: editHeroIsLoading,
+    error: editHeroError
+  } = useMutation(patchHero, {
+    onSuccess: () => {
+      navigate("/superheroes");
+    },
+    onError: (error) => {
+      // Error actions
+      console.log("error occured mutating w/ react query.", error);
+    },
+  });
+
+  return {
+    editHero,
+    editHeroIsLoading,
+    editHeroError
   };
 };
 

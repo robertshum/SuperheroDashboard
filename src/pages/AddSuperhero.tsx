@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent, MouseEvent, useEffect, useState } from "react";
 import AddEditSuperheroForm from "../components/AddEditSuperheroForm";
 import PowerLookup from "../components/PowerLookup";
 import { usePowerAPI } from "../hooks/useAPI";
-import {usePostHeroAPI} from "../hooks/useAPI";
+import { usePostHeroAPI } from "../hooks/useAPI";
 
 const AddSuperhero = () => {
 
@@ -18,10 +18,9 @@ const AddSuperhero = () => {
   const [selectedJsxPowers, setSelectedJsxPowers] = useState<JSX.Element[]>([]);
   const [powerMapping, setPowerMapping]
     = useState<{ id: number; tag: string; }[]>([]);
-
+  
   // custom hook to save
   const { addHero, addHeroIsLoading, addHeroError } = usePostHeroAPI();
-
 
   // API call to ALL powers;
   const {
@@ -29,10 +28,6 @@ const AddSuperhero = () => {
     powersError,
     powersIsLoading,
   } = usePowerAPI();
-
-  // track filtered powers
-  // TODO DO we really need this.
-  const [filteredPowers, setFilteredPowers] = useState<PowersData>({ $id: 0, $values: [] });
 
   // Remove f(n) from selected list
   const removePowerFromSelection = (id: number) => {
@@ -50,11 +45,10 @@ const AddSuperhero = () => {
 
   }, [powersFromQuery]);
 
-  // TODO needs a list of
+  // Construct a list of powers in form of JSX.Elements
   useEffect(() => {
 
-    if (!selectedPowers) return;
-    if (!powerMapping) return;
+    if (!selectedPowers || !powerMapping) return;
 
     // convert list of powers (number) -> Powers with tags:
     // let mappedPowers = [];
@@ -78,7 +72,7 @@ const AddSuperhero = () => {
     setSelectedJsxPowers(mappedPowers);
 
 
-  }, [selectedPowers]);
+  }, [selectedPowers, powerMapping]);
 
   const isDisabled = !name || !firstName || !lastName || !place || !description;
 
@@ -128,6 +122,12 @@ const AddSuperhero = () => {
     });
   };
 
+  // TODO make loading/error better looking :)
+  if (powersError) return <div>fetching power...</div>;
+  if (powersIsLoading) return <div>error fetching power...</div>;
+  if (addHeroError) return <div>add hero error...</div>;
+  if (addHeroIsLoading) return <div>loading adding hero...</div>;
+
   return (
     <AddEditSuperheroForm
       titleName="Add Superhero"
@@ -144,18 +144,11 @@ const AddSuperhero = () => {
       handleOnChangePlace={handleOnChangePlace}
       handleOnChangeDescription={handleOnChangeDescription}
       handleOnSubmit={handleOnSubmit}
-      filteredPowers={filteredPowers}
-      setFilteredPowers={setFilteredPowers}
       selectedPowers={selectedJsxPowers}
-    // setSelectedPowers={setSelectedPowers}
     >
       {/* Composition, and all that jazz. */}
-      <PowerLookup
-        // filteredPowers={props.filteredPowers}
-        // setFilteredPowers={props.setFilteredPowers}
+      <PowerLookup setSelectedPowers={setSelectedPowers} />
 
-        setSelectedPowers={setSelectedPowers}
-      />
     </AddEditSuperheroForm>
   );
 };

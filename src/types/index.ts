@@ -10,6 +10,12 @@ type PowerData = {
   description: string;
 };
 
+type PowerDataform = {
+  id: number;
+  tag: string;
+  description: string;
+};
+
 // Heroes(s)
 type SuperheroesData = {
   $id: number;
@@ -28,6 +34,7 @@ type SuperheroData = {
 
 // matches the fields in API for POST
 type SuperheroDataForm = {
+  id?: number;
   name: string;
   firstName: string;
   lastName: string;

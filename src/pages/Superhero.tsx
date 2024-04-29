@@ -45,7 +45,7 @@ const Superhero = () => {
               <span>
                 {hero.powers && hero.powers.$values.map((x: { id: number; tag: string; }) => {
                   return (
-                    <div
+                    <div key={x.id}
                       onClick={() => navigate(`/power/${x.id}`)}
                       className=
                       "hover:bg-info cursor-pointer badge badge-outline m-1">
