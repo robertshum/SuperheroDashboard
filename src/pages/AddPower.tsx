@@ -49,7 +49,7 @@ const AddPower = () => {
       handleOnChangeName={handleOnChangeName}
       handleOnChangeDescription={handleOnChangeDescription}
       handleOnSubmit={handleOnSubmit}
-    />
+    ></AddEditPowerForm>
   );
 };
 
