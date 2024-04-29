@@ -3,6 +3,7 @@ import AddEditSuperheroForm from "../components/AddEditSuperheroForm";
 import PowerLookup from "../components/PowerLookup";
 import { usePatchSuperheroAPI, usePowerAPI, useSuperheroAPI } from "../hooks/useAPI";
 import { useParams } from "react-router-dom";
+import Badge from "../components/Badge";
 
 const EditHero = () => {
 
@@ -86,12 +87,14 @@ const EditHero = () => {
       if (!powerName) {
         powerName = { id: -1, tag: "undefined" };
       }
-
-      return <div
-        onClick={() => removePowerFromSelection(x)}
-        key={x}
-        className="badge badge-info hover:badge-outline cursor-pointer">{powerName.tag}
-      </div>;
+      
+      return (
+        <Badge
+          key={x}
+          onClickHandler={() => removePowerFromSelection(x)}
+          name={powerName.tag}
+        />
+      );
     });
 
     setSelectedJsxPowers(mappedPowers);

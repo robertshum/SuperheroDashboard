@@ -71,7 +71,7 @@ const AddEditSuperheroForm = (props: AddEditSuperheroFormProps) => {
               {/* Superhero Powers */}
               <div className="mt-2 mb-2">
                 <h1 className="stat-value my-4">Superhero Powers</h1>
-                <div className="grid lg:grid-cols-6 md:grid-cols-3 grid-cols-1 mt-1 mb-1 gap-1">
+                <div className="flex flex-wrap my-4 gap-3">
                   {/* selected powers */}
                   {props.selectedPowers}
                 </div>

@@ -1,7 +1,7 @@
 // Power(s)
 type PowersData = {
   $id: number;
-  $values: any[]; // Assuming $values is an array of any type
+  $values: PowerDataform[]; // Assuming $values is an array of any type
 };
 
 type PowerData = {

@@ -1,6 +1,7 @@
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import PowerCard from '../components/PowerCard';
 import { useNavigate } from "react-router-dom";
+import Badge from "../components/Badge";
 
 const usePowersData = (
   powersFromQuery: PowersData, showEdit: boolean, cap?: number) => {
@@ -70,7 +71,6 @@ export const usePowersSelectionData = (
 
       // Add power only if it's not in the list
       const addPower = (id?: number) => {
-        console.log("attempting to add");
 
         setSelectedPowers((prevPowers) => {
           const oldPowers = [...prevPowers];
@@ -86,12 +86,15 @@ export const usePowersSelectionData = (
         });
       };
 
-      const mappedPowers = reversedPowers.map((x: PowerData) => {
-        return <div
-          onClick={() => addPower(x.id)}
-          key={x.id}
-          className="badge badge-info hover:badge-outline cursor-pointer">+ {x.tag}
-        </div>;
+      const mappedPowers = reversedPowers.map((x: PowerDataform) => {
+
+        const name = `+ ${x.tag}`;
+        return (
+          <Badge key={x.id}
+            onClickHandler={() => addPower(x.id)}
+            name={name}
+          />
+        );
       });
       setPowers(mappedPowers);
     }

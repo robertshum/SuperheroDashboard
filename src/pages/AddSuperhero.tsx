@@ -3,6 +3,7 @@ import AddEditSuperheroForm from "../components/AddEditSuperheroForm";
 import PowerLookup from "../components/PowerLookup";
 import { usePowerAPI } from "../hooks/useAPI";
 import { usePostHeroAPI } from "../hooks/useAPI";
+import Badge from "../components/Badge";
 
 const AddSuperhero = () => {
 
@@ -18,7 +19,7 @@ const AddSuperhero = () => {
   const [selectedJsxPowers, setSelectedJsxPowers] = useState<JSX.Element[]>([]);
   const [powerMapping, setPowerMapping]
     = useState<{ id: number; tag: string; }[]>([]);
-  
+
   // custom hook to save
   const { addHero, addHeroIsLoading, addHeroError } = usePostHeroAPI();
 
@@ -62,11 +63,13 @@ const AddSuperhero = () => {
         powerName = { id: -1, tag: "undefined" };
       }
 
-      return <div
-        onClick={() => removePowerFromSelection(x)}
-        key={x}
-        className="badge badge-info hover:badge-outline cursor-pointer">{powerName.tag}
-      </div>;
+      return (
+        <Badge 
+          key={x}
+          onClickHandler={() => removePowerFromSelection(x)}
+          name={powerName.tag}
+        />
+      );
     });
 
     setSelectedJsxPowers(mappedPowers);
