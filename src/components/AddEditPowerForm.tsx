@@ -18,7 +18,6 @@ const AddEditPowerForm = (props: AddEditPowerFormProps) => {
       <div className="flex-1 overflow-y-auto sm:pt-2 md:pt-2 pt-4 pb-4 px-6">
         <article className="mt-10 mb-2 gap-6">
           <h1 className="stat-value">{props.titleName}</h1>
-          
           <form onSubmit={props.handleOnSubmit}>
             <div className="flex flex-col min-w-3 items-start gap-5 flex-wrap mt-5">
               {/* Tag */}
@@ -43,10 +42,8 @@ const AddEditPowerForm = (props: AddEditPowerFormProps) => {
                 disabled={props.isButtonDisabled}
                 onClick={props.handleOnSubmit}
                 className="btn btn-md btn-ghost text-md">{props.buttonName}</button>
-              {/* <input type="submit" value="Submit" /> */}
             </div>
           </form>
-
         </article>
       </div>
     </div >

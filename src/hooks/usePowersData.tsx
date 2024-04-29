@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import PowerCard from '../components/PowerCard';
 import { useNavigate } from "react-router-dom";
+import Badge from "../components/Badge";
 
 const usePowersData = (
   powersFromQuery: PowersData, showEdit: boolean, cap?: number) => {
@@ -25,11 +26,11 @@ const usePowersData = (
       }
 
       // navigation for the power cards
-      const handleView = (id: number) => {
+      const handleView = (id?: number) => {
         navigate(`/power/${id}`);
       };
 
-      const handleEdit = (id: number) => {
+      const handleEdit = (id?: number) => {
         navigate(`/power/edit/${id}`);
       };
 
@@ -42,6 +43,58 @@ const usePowersData = (
           viewClickHandler={() => handleView(x.id)}
           editClickHandler={() => handleEdit(x.id)}
         /></div>;
+      });
+      setPowers(mappedPowers);
+    }
+  }, [powersFromQuery]);
+
+  return {
+    powers,
+    setPowers
+  };
+};
+
+export const usePowersSelectionData = (
+  powersFromQuery: PowersData,
+  setSelectedPowers: Dispatch<SetStateAction<number[]>>
+) => {
+
+  // update powers
+  const [powers, setPowers] = useState<any>([]);
+
+  // use powers to populate cards on UI
+  useEffect(() => {
+
+    if (powersFromQuery) {
+
+      let reversedPowers = powersFromQuery.$values.slice().reverse();
+
+      // Add power only if it's not in the list
+      const addPower = (id?: number) => {
+
+        setSelectedPowers((prevPowers) => {
+          const oldPowers = [...prevPowers];
+          if (!id) {
+            return oldPowers;
+          }
+
+          if (oldPowers.includes(id)) {
+            return oldPowers;
+          }
+          oldPowers.push(id);
+          return oldPowers;
+        });
+      };
+
+      const mappedPowers = reversedPowers.map((x: PowerDataform) => {
+
+        const name = `+ ${x.tag}`;
+        return (
+          <Badge key={x.id}
+            onClickHandler={() => addPower(x.id)}
+            name={name}
+          />
+        );
       });
       setPowers(mappedPowers);
     }

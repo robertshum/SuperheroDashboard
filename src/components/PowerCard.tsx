@@ -1,7 +1,7 @@
 import { MouseEventHandler } from "react";
 
 function PowerCard(props: {
-  id: number;
+  id?: number;
   tag: string;
   description: string;
   viewClickHandler: MouseEventHandler;
