@@ -69,14 +69,13 @@ const AddEditSuperheroForm = (props: AddEditSuperheroFormProps) => {
                   onChange={props.handleOnChangeDescription}
                   className="textarea textarea-bordered h-24 min-w-96" placeholder="Smooth talking space captain."></textarea>
               </label>
-
-              {/* Superhero Powers */}
-              <div className="mt-2 mb-2">
-                <h1 className="stat-value my-4">Superhero Powers</h1>
-                <div className="flex flex-wrap my-4 gap-3">
-                  {/* selected powers */}
-                  {props.selectedPowers}
-                </div>
+            </div>
+            {/* Superhero Powers */}
+            <div className="mt-2 mb-2">
+              <h1 className="stat-value my-4">Superhero Powers</h1>
+              <div className="flex flex-wrap my-4 gap-3">
+                {/* selected powers */}
+                {props.selectedPowers}
               </div>
             </div>
 
