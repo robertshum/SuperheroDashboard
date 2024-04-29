@@ -4,6 +4,7 @@ import PowerLookup from "../components/PowerLookup";
 import { usePatchSuperheroAPI, usePowerAPI, useSuperheroAPI } from "../hooks/useAPI";
 import { useParams } from "react-router-dom";
 import Badge from "../components/Badge";
+import { useDeleteSuperheroAPI } from "../hooks/useAPI";
 
 const EditHero = () => {
 
@@ -40,6 +41,12 @@ const EditHero = () => {
     editHeroIsLoading,
     editHeroError
   } = usePatchSuperheroAPI();
+
+  const {
+    removeHero,
+    removeHeroIsLoading,
+    removeHeroError
+  } = useDeleteSuperheroAPI();
 
   // initial load
   useEffect(() => {
@@ -108,6 +115,8 @@ const EditHero = () => {
   if (editHeroIsLoading) return <div>loading editing hero...</div>;
   if (powersError) return <div>loading power...</div>;
   if (powersIsLoading) return <div>loading powers...</div>;
+  if (removeHeroIsLoading) return <div>removing hero...</div>;
+  if (removeHeroError) return <div>removing hero...</div>;
 
   const isDisabled = !name || !firstName || !lastName || !place || !description;
 
@@ -169,7 +178,7 @@ const EditHero = () => {
     event.preventDefault();
 
     //start deleting hero
-    console.log("delete hero");
+    removeHero(Number(superHeroId));
   };
 
   return (
