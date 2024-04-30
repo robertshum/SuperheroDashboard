@@ -2,7 +2,7 @@
 
 Front-end React Dashboard that allows the administrator to add, remove, delete, update (CRUD) operations on Superheroes and any associated super powers they may have.\
 \
-This project is the front-end which requires the API that I have also built found here (SuperHero API): https://github.com/robertshum/SuperHeroAPI
+This project is the front-end which requires back-end API that I have also built, which can be found here (SuperHero API): https://github.com/robertshum/SuperHeroAPI
 
 # Youtube Demo
 
