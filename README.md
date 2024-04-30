@@ -38,21 +38,21 @@ This project is the front-end which requires the API that I have also built foun
 ## Screenshots
 
 Admin dashboard with simple analytics
-![Dashboard](./images/dashboard1.png)
+![Dashboard](https://github.com/robertshum/SuperheroDashboard/blob/main/public/images/dashboard1.PNG)
 Responsive layout
-![Dashboard - Responsive](./images/dashboard_responsive.png)
+![Dashboard - Responsive](https://github.com/robertshum/SuperheroDashboard/blob/main/public/images/dashboard_responsive.PNG)
 List all superheroes
-![Superheroes](./images/heroes.png)
+![Superheroes](https://github.com/robertshum/SuperheroDashboard/blob/main/public/images/heroes.PNG)
 Create new hero
-![Create new hero](./images/new_heroes.png)
+![Create new hero](https://github.com/robertshum/SuperheroDashboard/blob/main/public/images/new_heroes.PNG)
 List all powers
-![Powers](./images/powers.png)
+![Powers](https://github.com/robertshum/SuperheroDashboard/blob/main/public/images/powers.PNG)
 Responsive layout
-![Superheroes - Responsive](./images/superheroes_responsive.png)
+![Superheroes - Responsive](https://github.com/robertshum/SuperheroDashboard/blob/main/public/images/superheroes_responsive.PNG)
 Light mode - Dashboard
-![Light mode - Dashboard](./images/lightmode1.png)
+![Light mode - Dashboard](https://github.com/robertshum/SuperheroDashboard/blob/main/public/images/lightmode1.png)
 Light mode - List of Heroes
-![Light mode - Heroes](./images/lightmode2.png)
+![Light mode - Heroes](https://github.com/robertshum/SuperheroDashboard/blob/main/public/images/lightmode2.png)
 
 ## Installation (Front-end)
 1. Clone repo
