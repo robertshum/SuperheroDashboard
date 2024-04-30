@@ -38,20 +38,35 @@ This project is the front-end which requires the API that I have also built foun
 ## Screenshots
 
 Admin dashboard with simple analytics
+
 ![Dashboard](https://github.com/robertshum/SuperheroDashboard/blob/main/public/images/dashboard1.PNG)
+
 Responsive layout
+
 ![Dashboard - Responsive](https://github.com/robertshum/SuperheroDashboard/blob/main/public/images/dashboard_responsive.PNG)
+
 List all superheroes
+
 ![Superheroes](https://github.com/robertshum/SuperheroDashboard/blob/main/public/images/heroes.PNG)
+
 Create new hero
+
 ![Create new hero](https://github.com/robertshum/SuperheroDashboard/blob/main/public/images/new_heroes.PNG)
+
 List all powers
+
 ![Powers](https://github.com/robertshum/SuperheroDashboard/blob/main/public/images/powers.PNG)
+
 Responsive layout
+
 ![Superheroes - Responsive](https://github.com/robertshum/SuperheroDashboard/blob/main/public/images/superheroes_responsive.PNG)
+
 Light mode - Dashboard
+
 ![Light mode - Dashboard](https://github.com/robertshum/SuperheroDashboard/blob/main/public/images/lightmode1.png)
+
 Light mode - List of Heroes
+
 ![Light mode - Heroes](https://github.com/robertshum/SuperheroDashboard/blob/main/public/images/lightmode2.png)
 
 ## Installation (Front-end)
