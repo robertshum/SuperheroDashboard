@@ -12,7 +12,7 @@ function PowerCard(props: {
   return (
     <div className="card bg-base-100 shadow-xl p-1 min-h-28">
       <div className="card-body">
-        <div className="badge badge-info">{props.tag}</div>
+        <div className="badge badge-info line-clamp-1">{props.tag}</div>
         <p className="line-clamp-1">{props.description}</p>
         <div className="card-actions justify-end">
           <button onClick={props.viewClickHandler}

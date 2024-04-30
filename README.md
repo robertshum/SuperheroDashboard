@@ -1,33 +1,66 @@
-# SuperheroDashboard
-Front-end React Dashboard that allows users to perform CRUD operations
+# Superhero Dashboard 🦸‍♀️🦸‍♂️
 
-# React + TypeScript + Vite
+Front-end React Dashboard that allows the administrator to add, remove, delete, update (CRUD) operations on Superheroes and any associated super powers they may have.\
+\
+This project is the front-end which requires the API that I have also built found here (SuperHero API): https://github.com/robertshum/SuperHeroAPI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Youtube Demo
 
-Currently, two official plugins are available:
+[![Youtube demo](https://img.youtube.com/vi/YknHs4OsbhU/0.jpg)](https://www.youtube.com/watch?v=YknHs4OsbhU)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Features
 
-## Expanding the ESLint configuration
+* UI to support all CRUD operations for superheroes and powers.
+* Filter powers and superheroes by their name.
+* Easy toggle on/off of powers when creating/editing heroes.
+* Simple analytics on the main page (dashboard).
+* Responsive design (thanks to Daisy + Tailwind).
+* Dark/Light mode.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Tech Stack
 
-- Configure the top-level `parserOptions` property like this:
+- Front-end:
+  - React
+  - Vite
+  - Daisy UI
+  - Tailwind CSS
+  - React Query
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+- Back-end:
+  - .Net 8.0
+  - EF Core
+  - NUnit
+  - Moq
+  - Swagger (OpenAPI)
+  - MySQL (hosted locally)
+  - See here for details: https://github.com/robertshum/SuperHeroAPI
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Screenshots
+
+Admin dashboard with simple analytics
+![Dashboard](./images/dashboard1.png)
+Responsive layout
+![Dashboard - Responsive](./images/dashboard_responsive.png)
+List all superheroes
+![Superheroes](./images/heroes.png)
+Create new hero
+![Create new hero](./images/new_heroes.png)
+List all powers
+![Powers](./images/powers.png)
+Responsive layout
+![Superheroes - Responsive](./images/superheroes_responsive.png)
+Light mode - Dashboard
+![Light mode - Dashboard](./images/lightmode1.png)
+Light mode - List of Heroes
+![Light mode - Heroes](./images/lightmode2.png)
+
+## Installation (Front-end)
+1. Clone repo
+2. Go inside project folder
+3. ```npm install```
+4. Configure the .env to point the API to your back-end API
+5. ```npm run dev```
+
+# License
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
