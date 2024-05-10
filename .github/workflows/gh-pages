@@ -47,6 +47,9 @@ jobs:
       - name: Set API Endpoint
         run: echo "VITE_API_LOCATION=${{ secrets.VITE_API_LOCATION }}" >> $GITHUB_ENV
 
+      - name: Set API Suffix
+        run: echo "VITE_API_SUFFIX=${{ secrets.VITE_API_SUFFIX }}" >> $GITHUB_ENV
+
       - name: Install dependencies
         run: npm ci
 
