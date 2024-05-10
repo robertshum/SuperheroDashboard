@@ -2,13 +2,20 @@ import { useQuery, useMutation } from "react-query";
 import { useNavigate } from 'react-router-dom';
 
 const API_LOC: string = import.meta.env.VITE_API_LOCATION;
-const API_PORT: number = import.meta.env.VITE_API_PORT;
+let API_PORT: string = "";
+
+const ENV_PORT: string = import.meta.env.VITE_API_PORT;
+
+if (ENV_PORT) {
+  API_PORT = ENV_PORT;
+}
+
 const API_SUFFIX: string = import.meta.env.VITE_API_SUFFIX;
 
 const getPowers = async (id?: number) => {
   const powerSuffix = id === undefined ? 'Power' : `Power/${id}`;
   const response =
-    await fetch(`${API_LOC}:${API_PORT}${API_SUFFIX}${powerSuffix}`);
+    await fetch(`${API_LOC}${API_PORT}${API_SUFFIX}${powerSuffix}`);
   const jsonResults = await response.json();
   return jsonResults;
 };
@@ -16,13 +23,13 @@ const getPowers = async (id?: number) => {
 const getSuperHeroes = async (id?: number) => {
   const heroSuffix = id === undefined ? 'SuperHero' : `SuperHero/${id}`;
   const response =
-    await fetch(`${API_LOC}:${API_PORT}${API_SUFFIX}${heroSuffix}`);
+    await fetch(`${API_LOC}${API_PORT}${API_SUFFIX}${heroSuffix}`);
   const jsonResults = await response.json();
   return jsonResults;
 };
 
 const postPower = async (input: PowerData) => {
-  const url = `${API_LOC}:${API_PORT}${API_SUFFIX}Power`;
+  const url = `${API_LOC}${API_PORT}${API_SUFFIX}Power`;
   const response = await fetch(url, {
     method: "POST",
     headers: {
@@ -39,7 +46,7 @@ const postPower = async (input: PowerData) => {
 };
 
 const postHero = async (input: SuperheroDataForm) => {
-  const url = `${API_LOC}:${API_PORT}${API_SUFFIX}Superhero`;
+  const url = `${API_LOC}${API_PORT}${API_SUFFIX}Superhero`;
   const response = await fetch(url, {
     method: "POST",
     headers: {
@@ -56,7 +63,7 @@ const postHero = async (input: SuperheroDataForm) => {
 };
 
 const patchPower = async (input: PowerData) => {
-  const url = `${API_LOC}:${API_PORT}${API_SUFFIX}Power`;
+  const url = `${API_LOC}${API_PORT}${API_SUFFIX}Power`;
   const response = await fetch(url, {
     method: "PUT",
     headers: {
@@ -73,7 +80,7 @@ const patchPower = async (input: PowerData) => {
 };
 
 const patchHero = async (input: SuperheroDataForm) => {
-  const url = `${API_LOC}:${API_PORT}${API_SUFFIX}Superhero`;
+  const url = `${API_LOC}${API_PORT}${API_SUFFIX}Superhero`;
   const response = await fetch(url, {
     method: "PUT",
     headers: {
@@ -90,7 +97,7 @@ const patchHero = async (input: SuperheroDataForm) => {
 };
 
 const deletePower = async (id: number) => {
-  const url = `${API_LOC}:${API_PORT}${API_SUFFIX}Power/${id}`;
+  const url = `${API_LOC}${API_PORT}${API_SUFFIX}Power/${id}`;
   const response = await fetch(url, {
     method: "DELETE"
   });
@@ -103,7 +110,7 @@ const deletePower = async (id: number) => {
 };
 
 const deleteHero = async (id: number) => {
-  const url = `${API_LOC}:${API_PORT}${API_SUFFIX}Superhero/${id}`;
+  const url = `${API_LOC}${API_PORT}${API_SUFFIX}Superhero/${id}`;
   const response = await fetch(url, {
     method: "DELETE"
   });
