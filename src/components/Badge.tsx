@@ -10,7 +10,7 @@ const Badge = (props: BadgeProps) => {
   return (
     <div
       onClick={props.onClickHandler}
-      className="badge badge-info hover:badge-outline cursor-pointer line-clamp-1">{props.name}
+      className="badge badge-info hover:badge-outline cursor-pointer line-clamp-1 select-none">{props.name}
     </div>
   );
 };
