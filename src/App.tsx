@@ -21,9 +21,9 @@ function App() {
       <Navigation />
       <Routes>
         {/* any home '/' or 'SuperHeroDashboard' redirects to dashboard */}
-        <Route path="/"
-          element={<Navigate to="/SuperheroDashboard" replace />} />
-        <Route path="/SuperheroDashboard" element={<Dashboard />} />
+        <Route path="/SuperheroDashboard"
+          element={<Navigate to="/" replace />} />
+        <Route path="/" element={<Dashboard />} />
         <Route path="/powers" element={<Powers />} />
         <Route path="/superheroes" element={<Superheroes />} />
         <Route path="/power/:powerId" element={<Power />} />
