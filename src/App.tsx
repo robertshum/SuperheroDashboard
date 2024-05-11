@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Footer from './components/Footer';
 import './App.css';
 
@@ -20,7 +20,10 @@ function App() {
     <>
       <Navigation />
       <Routes>
-        <Route path="/" element={<Dashboard />} />
+        {/* any home '/' or 'SuperHeroDashboard' redirects to dashboard */}
+        <Route path="/"
+          element={<Navigate to="/SuperheroDashboard" replace />} />
+        <Route path="/SuperheroDashboard" element={<Dashboard />} />
         <Route path="/powers" element={<Powers />} />
         <Route path="/superheroes" element={<Superheroes />} />
         <Route path="/power/:powerId" element={<Power />} />
