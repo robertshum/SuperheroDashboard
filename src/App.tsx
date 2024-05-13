@@ -13,15 +13,15 @@ import AddPower from './pages/AddPower';
 import EditPower from './pages/EditPower';
 import AddSuperhero from './pages/AddSuperhero';
 import EditSuperhero from './pages/EditSuperhero';
-import { SignedIn, SignedOut, SignInButton } from "@clerk/clerk-react";
-
+import SignIn from './pages/SignIn';
+import { SignedIn, SignedOut } from "@clerk/clerk-react";
 
 function App() {
 
   return (
     <>
       <SignedOut>
-        <SignInButton />
+        <SignIn />
       </SignedOut>
       <SignedIn>
         <Navigation />
@@ -39,8 +39,9 @@ function App() {
           <Route path="/hero/edit/:superHeroId" element={<EditSuperhero />} />
           <Route path="/hero/add" element={<AddSuperhero />} />
         </Routes>
+        <Footer />
       </SignedIn>
-      <Footer />
+
     </>
   );
 }
