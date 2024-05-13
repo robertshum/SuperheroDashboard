@@ -1,7 +1,6 @@
 import { useQuery, useMutation } from "react-query";
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@clerk/clerk-react';
-import { GetToken } from "@clerk/types";
 
 const API_LOC: string = import.meta.env.VITE_API_LOCATION;
 let API_PORT: string = "";
