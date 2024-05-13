@@ -1,6 +1,7 @@
 import { useQuery, useMutation } from "react-query";
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@clerk/clerk-react';
+import { GetToken } from "@clerk/types";
 
 const API_LOC: string = import.meta.env.VITE_API_LOCATION;
 let API_PORT: string = "";
@@ -13,8 +14,8 @@ if (ENV_PORT) {
 
 const API_SUFFIX: string = import.meta.env.VITE_API_SUFFIX;
 
-const getPowers = async (getToken: () => Promise<string>, id?: number) => {
-  
+const getPowers = async (getToken: () => GetToken, id?: number) => {
+
   const powerSuffix = id === undefined ? 'Power' : `Power/${id}`;
   const response =
     await fetch(`${API_LOC}${API_PORT}${API_SUFFIX}${powerSuffix}`, {
