@@ -14,12 +14,17 @@ if (ENV_PORT) {
 
 const API_SUFFIX: string = import.meta.env.VITE_API_SUFFIX;
 
-const getPowers = async (getToken: () => GetToken, id?: number) => {
+const getPowers = async (getToken: () => Promise<string | null>, id?: number) => {
+  const token = await getToken();
+
+  if (!token) {
+    throw new Error('We cannot validate this request without a token.');
+  }
 
   const powerSuffix = id === undefined ? 'Power' : `Power/${id}`;
   const response =
     await fetch(`${API_LOC}${API_PORT}${API_SUFFIX}${powerSuffix}`, {
-      headers: { Authorization: `Bearer ${await getToken()}` }
+      headers: { Authorization: `Bearer ${token}` }
     });
   const jsonResults = await response.json();
   return jsonResults;
