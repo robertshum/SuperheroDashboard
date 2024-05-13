@@ -1,5 +1,6 @@
 import ThemeToggle from "./ThemeToggle";
 import { Link } from 'react-router-dom';
+import { UserButton } from "@clerk/clerk-react";
 
 function Navigation() {
 
@@ -27,8 +28,9 @@ function Navigation() {
 
         </ul>
       </div>
-      <div className="navbar-end">
+      <div className="navbar-end gap-2">
         {/* Light and dark theme selection toogle **/}
+        <UserButton />
         <ThemeToggle />
       </div>
     </div>

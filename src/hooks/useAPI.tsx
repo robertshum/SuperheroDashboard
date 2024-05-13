@@ -1,5 +1,6 @@
 import { useQuery, useMutation } from "react-query";
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@clerk/clerk-react';
 
 const API_LOC: string = import.meta.env.VITE_API_LOCATION;
 let API_PORT: string = "";
@@ -12,10 +13,13 @@ if (ENV_PORT) {
 
 const API_SUFFIX: string = import.meta.env.VITE_API_SUFFIX;
 
-const getPowers = async (id?: number) => {
+const getPowers = async (getToken: () => Promise<string>, id?: number) => {
+  
   const powerSuffix = id === undefined ? 'Power' : `Power/${id}`;
   const response =
-    await fetch(`${API_LOC}${API_PORT}${API_SUFFIX}${powerSuffix}`);
+    await fetch(`${API_LOC}${API_PORT}${API_SUFFIX}${powerSuffix}`, {
+      headers: { Authorization: `Bearer ${await getToken()}` }
+    });
   const jsonResults = await response.json();
   return jsonResults;
 };
@@ -218,14 +222,14 @@ export const useDeleteSuperheroAPI = () => {
 export const usePowerAPI = (id?: number) => {
 
   const queryKey = id === undefined ? "allPowerData" : "onePowerData";
-
+  const { getToken } = useAuth();
   // get powers from API call
   const {
     data: powersFromQuery,
     error: powersError,
     isLoading: powersIsLoading,
     refetch: powersRefetch
-  } = useQuery<PowersData | PowerData>(queryKey, () => getPowers(id));
+  } = useQuery<PowersData | PowerData>(queryKey, () => getPowers(getToken, id));
 
   return {
     // powers
