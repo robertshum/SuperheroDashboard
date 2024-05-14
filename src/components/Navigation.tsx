@@ -30,7 +30,7 @@ function Navigation() {
       </div>
       <div className="navbar-end gap-2">
         {/* Light and dark theme selection toogle **/}
-        <UserButton />
+        <UserButton afterSignOutUrl="/SuperheroDashboard"/>
         <ThemeToggle />
       </div>
     </div>
