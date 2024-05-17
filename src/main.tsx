@@ -4,6 +4,7 @@ import { HashRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ClerkProvider } from '@clerk/clerk-react';
 import App from './App.tsx';
+import { AuthTokenProvider } from './context/AuthTokenProvider.tsx';
 import './index.css';
 
 // Import your publishable key
@@ -19,9 +20,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   // <React.StrictMode>
   <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
     <QueryClientProvider client={queryClient}>
-      <HashRouter>
-        <App />
-      </HashRouter>
+      <AuthTokenProvider>
+        <HashRouter>
+          <App />
+        </HashRouter>
+      </AuthTokenProvider>
     </QueryClientProvider>
   </ClerkProvider>
   // </React.StrictMode>,

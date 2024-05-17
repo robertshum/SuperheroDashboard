@@ -1,6 +1,6 @@
 import { useQuery, useMutation } from "react-query";
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@clerk/clerk-react';
+import { useToken } from '../context/AuthTokenProvider';
 
 const API_LOC: string = import.meta.env.VITE_API_LOCATION;
 let API_PORT: string = "";
@@ -13,8 +13,7 @@ if (ENV_PORT) {
 
 const API_SUFFIX: string = import.meta.env.VITE_API_SUFFIX;
 
-const getPowers = async (getToken: () => Promise<string | null>, id?: number) => {
-  const token = await getToken();
+const getPowers = async (token: string | null, id?: number) => {
 
   if (!token) {
     throw new Error('We cannot validate this request without a token.');
@@ -32,9 +31,7 @@ const getPowers = async (getToken: () => Promise<string | null>, id?: number) =>
   return jsonResults;
 };
 
-const getSuperHeroes = async (getToken: () => Promise<string | null>, id?: number) => {
-  const token = await getToken();
-
+const getSuperHeroes = async (token: string | null, id?: number) => {
   const heroSuffix = id === undefined ? 'SuperHero' : `SuperHero/${id}`;
   const response =
     await fetch(`${API_LOC}${API_PORT}${API_SUFFIX}${heroSuffix}`, {
@@ -47,12 +44,13 @@ const getSuperHeroes = async (getToken: () => Promise<string | null>, id?: numbe
   return jsonResults;
 };
 
-const postPower = async (input: PowerData) => {
+const postPower = async (input: PowerData, token: string | null) => {
   const url = `${API_LOC}${API_PORT}${API_SUFFIX}Power`;
   const response = await fetch(url, {
     method: "POST",
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
     },
     body: JSON.stringify(input),
   });
@@ -64,12 +62,13 @@ const postPower = async (input: PowerData) => {
   return await response.json();
 };
 
-const postHero = async (input: SuperheroDataForm) => {
+const postHero = async (input: SuperheroDataForm, token: string | null) => {
   const url = `${API_LOC}${API_PORT}${API_SUFFIX}Superhero`;
   const response = await fetch(url, {
     method: "POST",
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
     },
     body: JSON.stringify(input),
   });
@@ -81,12 +80,13 @@ const postHero = async (input: SuperheroDataForm) => {
   return await response.json();
 };
 
-const patchPower = async (input: PowerData) => {
+const patchPower = async (input: PowerData, token: string | null) => {
   const url = `${API_LOC}${API_PORT}${API_SUFFIX}Power`;
   const response = await fetch(url, {
     method: "PUT",
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
     },
     body: JSON.stringify(input),
   });
@@ -98,12 +98,13 @@ const patchPower = async (input: PowerData) => {
   return await response.json();
 };
 
-const patchHero = async (input: SuperheroDataForm) => {
+const patchHero = async (input: SuperheroDataForm, token: string | null) => {
   const url = `${API_LOC}${API_PORT}${API_SUFFIX}Superhero`;
   const response = await fetch(url, {
     method: "PUT",
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
     },
     body: JSON.stringify(input),
   });
@@ -115,10 +116,14 @@ const patchHero = async (input: SuperheroDataForm) => {
   return await response.json();
 };
 
-const deletePower = async (id: number) => {
+const deletePower = async (id: number, token: string | null) => {
   const url = `${API_LOC}${API_PORT}${API_SUFFIX}Power/${id}`;
   const response = await fetch(url, {
-    method: "DELETE"
+    method: "DELETE",
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
   });
 
   if (!response.ok) {
@@ -128,10 +133,14 @@ const deletePower = async (id: number) => {
   return await response.json();
 };
 
-const deleteHero = async (id: number) => {
+const deleteHero = async (id: number, token: string | null) => {
   const url = `${API_LOC}${API_PORT}${API_SUFFIX}Superhero/${id}`;
   const response = await fetch(url, {
-    method: "DELETE"
+    method: "DELETE",
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
   });
 
   if (!response.ok) {
@@ -144,7 +153,8 @@ const deleteHero = async (id: number) => {
 export const useSuperheroAPI = (id?: number) => {
 
   const queryKey = id === undefined ? "allHeroData" : "oneHeroData";
-  const { getToken } = useAuth();
+
+  const tokenPromise = useToken();
 
   // get superheroes from API call
   const {
@@ -152,7 +162,7 @@ export const useSuperheroAPI = (id?: number) => {
     error: superHeroesError,
     isLoading: superHeroesIsLoading,
     refetch: superHeroesRefetch
-  } = useQuery<SuperheroesData | SuperheroData>(queryKey, () => getSuperHeroes(getToken, id));
+  } = useQuery<SuperheroesData | SuperheroData>(queryKey, () => getSuperHeroes(tokenPromise, id));
 
   return {
     // superheroes
@@ -165,12 +175,14 @@ export const useSuperheroAPI = (id?: number) => {
 
 export const usePostHeroAPI = () => {
 
+  const tokenPromise = useToken();
+
   const navigate = useNavigate();
   const {
     mutate: addHero,
     isLoading: addHeroIsLoading,
     error: addHeroError
-  } = useMutation(postHero, {
+  } = useMutation((data: SuperheroDataForm) => postHero(data, tokenPromise), {
     onSuccess: () => {
       navigate("/superheroes");
     },
@@ -189,12 +201,14 @@ export const usePostHeroAPI = () => {
 
 export const usePatchSuperheroAPI = () => {
 
+  const tokenPromise = useToken();
+
   const navigate = useNavigate();
   const {
     mutate: editHero,
     isLoading: editHeroIsLoading,
     error: editHeroError
-  } = useMutation(patchHero, {
+  } = useMutation((data: SuperheroDataForm) => patchHero(data, tokenPromise), {
     onSuccess: () => {
       navigate("/superheroes");
     },
@@ -213,12 +227,14 @@ export const usePatchSuperheroAPI = () => {
 
 export const useDeleteSuperheroAPI = () => {
 
+  const tokenPromise = useToken();
+
   const navigate = useNavigate();
   const {
     mutate: removeHero,
     isLoading: removeHeroIsLoading,
     error: removeHeroError
-  } = useMutation(deleteHero, {
+  } = useMutation((id: number) => deleteHero(id, tokenPromise), {
     onSuccess: () => {
       navigate("/superheroes");
     },
@@ -238,15 +254,15 @@ export const useDeleteSuperheroAPI = () => {
 export const usePowerAPI = (id?: number) => {
 
   const queryKey = id === undefined ? "allPowerData" : "onePowerData";
-  const { getToken } = useAuth();
 
-  // get powers from API call
+  const tokenPromise = useToken();
+
   const {
     data: powersFromQuery,
     error: powersError,
     isLoading: powersIsLoading,
     refetch: powersRefetch
-  } = useQuery<PowersData | PowerData>(queryKey, () => getPowers(getToken, id));
+  } = useQuery<PowersData | PowerData>(queryKey, () => getPowers(tokenPromise, id));
 
   return {
     // powers
@@ -259,12 +275,14 @@ export const usePowerAPI = (id?: number) => {
 
 export const usePostPowerAPI = () => {
 
+  const tokenPromise = useToken();
+
   const navigate = useNavigate();
   const {
     mutate: addPower,
     isLoading: addPowerIsLoading,
     error: addPowerError
-  } = useMutation(postPower, {
+  } = useMutation((data: PowerData) => postPower(data, tokenPromise), {
     onSuccess: () => {
       navigate("/powers");
     },
@@ -283,12 +301,14 @@ export const usePostPowerAPI = () => {
 
 export const usePatchPowerAPI = () => {
 
+  const tokenPromise = useToken();
+
   const navigate = useNavigate();
   const {
     mutate: editPower,
     isLoading: editPowerIsLoading,
     error: editPowerError
-  } = useMutation(patchPower, {
+  } = useMutation((data: PowerData) => patchPower(data, tokenPromise), {
     onSuccess: () => {
       navigate("/powers");
     },
@@ -307,12 +327,14 @@ export const usePatchPowerAPI = () => {
 
 export const useDeletePowerAPI = () => {
 
+  const tokenPromise = useToken();
+
   const navigate = useNavigate();
   const {
     mutate: removePower,
     isLoading: removePowerIsLoading,
     error: removePowerError
-  } = useMutation(deletePower, {
+  } = useMutation((id: number) => deletePower(id, tokenPromise), {
     onSuccess: () => {
       navigate("/powers");
     },
