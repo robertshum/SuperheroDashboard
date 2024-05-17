@@ -23,16 +23,26 @@ const getPowers = async (getToken: () => Promise<string | null>, id?: number) =>
   const powerSuffix = id === undefined ? 'Power' : `Power/${id}`;
   const response =
     await fetch(`${API_LOC}${API_PORT}${API_SUFFIX}${powerSuffix}`, {
-      headers: { Authorization: `Bearer ${token}` }
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
     });
   const jsonResults = await response.json();
   return jsonResults;
 };
 
-const getSuperHeroes = async (id?: number) => {
+const getSuperHeroes = async (getToken: () => Promise<string | null>, id?: number) => {
+  const token = await getToken();
+
   const heroSuffix = id === undefined ? 'SuperHero' : `SuperHero/${id}`;
   const response =
-    await fetch(`${API_LOC}${API_PORT}${API_SUFFIX}${heroSuffix}`);
+    await fetch(`${API_LOC}${API_PORT}${API_SUFFIX}${heroSuffix}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
+    });
   const jsonResults = await response.json();
   return jsonResults;
 };
@@ -134,6 +144,7 @@ const deleteHero = async (id: number) => {
 export const useSuperheroAPI = (id?: number) => {
 
   const queryKey = id === undefined ? "allHeroData" : "oneHeroData";
+  const { getToken } = useAuth();
 
   // get superheroes from API call
   const {
@@ -141,7 +152,7 @@ export const useSuperheroAPI = (id?: number) => {
     error: superHeroesError,
     isLoading: superHeroesIsLoading,
     refetch: superHeroesRefetch
-  } = useQuery<SuperheroesData | SuperheroData>(queryKey, () => getSuperHeroes(id));
+  } = useQuery<SuperheroesData | SuperheroData>(queryKey, () => getSuperHeroes(getToken, id));
 
   return {
     // superheroes
@@ -228,6 +239,7 @@ export const usePowerAPI = (id?: number) => {
 
   const queryKey = id === undefined ? "allPowerData" : "onePowerData";
   const { getToken } = useAuth();
+
   // get powers from API call
   const {
     data: powersFromQuery,
