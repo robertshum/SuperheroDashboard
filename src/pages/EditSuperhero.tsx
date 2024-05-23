@@ -113,10 +113,10 @@ const EditHero = () => {
   if (superHeroesIsLoading) return <div>loading superhero...</div>;
   if (editHeroError) return <div>editing hero error...</div>;
   if (editHeroIsLoading) return <div>loading editing hero...</div>;
-  if (powersError) return <div>loading power...</div>;
+  if (powersError) return <div>error loading power...</div>;
   if (powersIsLoading) return <div>loading powers...</div>;
   if (removeHeroIsLoading) return <div>removing hero...</div>;
-  if (removeHeroError) return <div>removing hero...</div>;
+  if (removeHeroError) return <div>error removing hero...</div>;
 
   const isDisabled = !name || !firstName || !lastName || !place || !description;
 

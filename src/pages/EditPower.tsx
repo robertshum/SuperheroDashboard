@@ -76,9 +76,9 @@ const EditPower = () => {
 
   // TODO make loading/error better looking :)
   if (powersError) return <div>fetching power...</div>;
-  if (powersIsLoading) return <div>error fetching power...</div>;
-  if (editPowerError) return <div>editing power...</div>;
-  if (editPowerIsLoading) return <div>error editing power...</div>;
+  if (powersIsLoading) return <div>fetching power...</div>;
+  if (editPowerError) return <div>error editing power...</div>;
+  if (editPowerIsLoading) return <div>editing power...</div>;
   if (removePowerIsLoading) return <div>removing power...</div>;
   if (removePowerError) return <div>error removing power...</div>;
 

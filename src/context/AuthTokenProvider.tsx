@@ -27,7 +27,7 @@ const AuthTokenProvider = ({ children }: { children: ReactNode; }) => {
       setToken(fetchedToken);
     };
     fetchToken();
-  }, []);
+  }, [getToken]);
 
   return (
     <AuthTokenContext.Provider value={token}>
