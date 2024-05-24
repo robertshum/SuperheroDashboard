@@ -2,6 +2,8 @@ const NotificationModal = (props:
   {
     powersIsLoading?: boolean;
     powersError?: unknown;
+    superHeroesIsLoading?: boolean;
+    superHeroesError?: unknown;
   }) => {
 
   let topMsg = "";
@@ -14,7 +16,17 @@ const NotificationModal = (props:
 
   if (props.powersError) {
     topMsg = "Error Fetching Powers";
-    bottomMsg = "We are having issues getting powers from the bat cave...";
+    bottomMsg = "We are having issues loading powers from the bat cave...";
+  }
+
+  if (props.superHeroesIsLoading) {
+    topMsg = "Fetching Superheroes";
+    bottomMsg = "Please be patient while we load...";
+  }
+
+  if (props.superHeroesError) {
+    topMsg = "Error Fetching Superheroes";
+    bottomMsg = "We are having issues loading heroes from the bat cave...";
   }
 
   //hide the modal if any of the msgs are empty
