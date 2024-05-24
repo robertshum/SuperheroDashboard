@@ -1,6 +1,7 @@
+import { useAuth } from "@clerk/clerk-react";
+import { GetToken } from "@clerk/types";
 import { useQuery, useMutation } from "react-query";
 import { useNavigate } from 'react-router-dom';
-import { useToken } from '../context/AuthTokenProvider';
 
 const API_LOC: string = import.meta.env.VITE_API_LOCATION;
 let API_PORT: string = "";
@@ -13,7 +14,7 @@ if (ENV_PORT) {
 
 const API_SUFFIX: string = import.meta.env.VITE_API_SUFFIX;
 
-const getPowers = async (token: string | null, id?: number) => {
+const getPowers = async (token: GetToken | null, id?: number) => {
 
   if (!token) {
     throw new Error('We cannot validate this request without a token.');
@@ -24,33 +25,43 @@ const getPowers = async (token: string | null, id?: number) => {
     await fetch(`${API_LOC}${API_PORT}${API_SUFFIX}${powerSuffix}`, {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${await token()}`
       }
     });
   const jsonResults = await response.json();
   return jsonResults;
 };
 
-const getSuperHeroes = async (token: string | null, id?: number) => {
+const getSuperHeroes = async (token: GetToken | null, id?: number) => {
   const heroSuffix = id === undefined ? 'SuperHero' : `SuperHero/${id}`;
+
+  if (!token) {
+    throw new Error('We cannot validate this request without a token.');
+  }
+
   const response =
     await fetch(`${API_LOC}${API_PORT}${API_SUFFIX}${heroSuffix}`, {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${await token()}`
       }
     });
   const jsonResults = await response.json();
   return jsonResults;
 };
 
-const postPower = async (input: PowerData, token: string | null) => {
+const postPower = async (input: PowerData, token: GetToken) => {
   const url = `${API_LOC}${API_PORT}${API_SUFFIX}Power`;
+
+  if (!token) {
+    throw new Error('We cannot validate this request without a token.');
+  }
+
   const response = await fetch(url, {
     method: "POST",
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${await token()}`
     },
     body: JSON.stringify(input),
   });
@@ -62,13 +73,18 @@ const postPower = async (input: PowerData, token: string | null) => {
   return await response.json();
 };
 
-const postHero = async (input: SuperheroDataForm, token: string | null) => {
+const postHero = async (input: SuperheroDataForm, token: GetToken) => {
   const url = `${API_LOC}${API_PORT}${API_SUFFIX}Superhero`;
+
+  if (!token) {
+    throw new Error('We cannot validate this request without a token.');
+  }
+
   const response = await fetch(url, {
     method: "POST",
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${await token()}`
     },
     body: JSON.stringify(input),
   });
@@ -80,13 +96,18 @@ const postHero = async (input: SuperheroDataForm, token: string | null) => {
   return await response.json();
 };
 
-const patchPower = async (input: PowerData, token: string | null) => {
+const patchPower = async (input: PowerData, token: GetToken) => {
   const url = `${API_LOC}${API_PORT}${API_SUFFIX}Power`;
+
+  if (!token) {
+    throw new Error('We cannot validate this request without a token.');
+  }
+
   const response = await fetch(url, {
     method: "PUT",
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${await token()}`
     },
     body: JSON.stringify(input),
   });
@@ -98,13 +119,18 @@ const patchPower = async (input: PowerData, token: string | null) => {
   return await response.json();
 };
 
-const patchHero = async (input: SuperheroDataForm, token: string | null) => {
+const patchHero = async (input: SuperheroDataForm, token: GetToken) => {
   const url = `${API_LOC}${API_PORT}${API_SUFFIX}Superhero`;
+
+  if (!token) {
+    throw new Error('We cannot validate this request without a token.');
+  }
+
   const response = await fetch(url, {
     method: "PUT",
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${await token()}`
     },
     body: JSON.stringify(input),
   });
@@ -116,13 +142,18 @@ const patchHero = async (input: SuperheroDataForm, token: string | null) => {
   return await response.json();
 };
 
-const deletePower = async (id: number, token: string | null) => {
+const deletePower = async (id: number, token: GetToken) => {
   const url = `${API_LOC}${API_PORT}${API_SUFFIX}Power/${id}`;
+
+  if (!token) {
+    throw new Error('We cannot validate this request without a token.');
+  }
+
   const response = await fetch(url, {
     method: "DELETE",
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${await token()}`
     },
   });
 
@@ -133,13 +164,18 @@ const deletePower = async (id: number, token: string | null) => {
   return await response.json();
 };
 
-const deleteHero = async (id: number, token: string | null) => {
+const deleteHero = async (id: number, token: GetToken) => {
   const url = `${API_LOC}${API_PORT}${API_SUFFIX}Superhero/${id}`;
+
+  if (!token) {
+    throw new Error('We cannot validate this request without a token.');
+  }
+
   const response = await fetch(url, {
     method: "DELETE",
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${await token()}`
     },
   });
 
@@ -154,7 +190,8 @@ export const useSuperheroAPI = (id?: number) => {
 
   const queryKey = id === undefined ? "allHeroData" : "oneHeroData";
 
-  const tokenPromise = useToken();
+  // get ckerk token
+  const { getToken } = useAuth();
 
   // get superheroes from API call
   const {
@@ -162,7 +199,7 @@ export const useSuperheroAPI = (id?: number) => {
     error: superHeroesError,
     isLoading: superHeroesIsLoading,
     refetch: superHeroesRefetch
-  } = useQuery<SuperheroesData | SuperheroData>(queryKey, () => getSuperHeroes(tokenPromise, id));
+  } = useQuery<SuperheroesData | SuperheroData>(queryKey, () => getSuperHeroes(getToken, id));
 
   return {
     // superheroes
@@ -175,14 +212,15 @@ export const useSuperheroAPI = (id?: number) => {
 
 export const usePostHeroAPI = () => {
 
-  const tokenPromise = useToken();
+  // get ckerk token
+  const { getToken } = useAuth();
 
   const navigate = useNavigate();
   const {
     mutate: addHero,
     isLoading: addHeroIsLoading,
     error: addHeroError
-  } = useMutation((data: SuperheroDataForm) => postHero(data, tokenPromise), {
+  } = useMutation((data: SuperheroDataForm) => postHero(data, getToken), {
     onSuccess: () => {
       navigate("/superheroes");
     },
@@ -201,14 +239,15 @@ export const usePostHeroAPI = () => {
 
 export const usePatchSuperheroAPI = () => {
 
-  const tokenPromise = useToken();
+  // get ckerk token
+  const { getToken } = useAuth();
 
   const navigate = useNavigate();
   const {
     mutate: editHero,
     isLoading: editHeroIsLoading,
     error: editHeroError
-  } = useMutation((data: SuperheroDataForm) => patchHero(data, tokenPromise), {
+  } = useMutation((data: SuperheroDataForm) => patchHero(data, getToken), {
     onSuccess: () => {
       navigate("/superheroes");
     },
@@ -227,14 +266,15 @@ export const usePatchSuperheroAPI = () => {
 
 export const useDeleteSuperheroAPI = () => {
 
-  const tokenPromise = useToken();
+  // get ckerk token
+  const { getToken } = useAuth();
 
   const navigate = useNavigate();
   const {
     mutate: removeHero,
     isLoading: removeHeroIsLoading,
     error: removeHeroError
-  } = useMutation((id: number) => deleteHero(id, tokenPromise), {
+  } = useMutation((id: number) => deleteHero(id, getToken), {
     onSuccess: () => {
       navigate("/superheroes");
     },
@@ -255,14 +295,15 @@ export const usePowerAPI = (id?: number) => {
 
   const queryKey = id === undefined ? "allPowerData" : "onePowerData";
 
-  const tokenPromise = useToken();
+  // get ckerk token
+  const { getToken } = useAuth();
 
   const {
     data: powersFromQuery,
     error: powersError,
     isLoading: powersIsLoading,
     refetch: powersRefetch
-  } = useQuery<PowersData | PowerData>(queryKey, () => getPowers(tokenPromise, id));
+  } = useQuery<PowersData | PowerData>(queryKey, () => getPowers(getToken, id));
 
   return {
     // powers
@@ -275,14 +316,15 @@ export const usePowerAPI = (id?: number) => {
 
 export const usePostPowerAPI = () => {
 
-  const tokenPromise = useToken();
+  // get ckerk token
+  const { getToken } = useAuth();
 
   const navigate = useNavigate();
   const {
     mutate: addPower,
     isLoading: addPowerIsLoading,
     error: addPowerError
-  } = useMutation((data: PowerData) => postPower(data, tokenPromise), {
+  } = useMutation((data: PowerData) => postPower(data, getToken), {
     onSuccess: () => {
       navigate("/powers");
     },
@@ -301,14 +343,15 @@ export const usePostPowerAPI = () => {
 
 export const usePatchPowerAPI = () => {
 
-  const tokenPromise = useToken();
+  // get ckerk token
+  const { getToken } = useAuth();
 
   const navigate = useNavigate();
   const {
     mutate: editPower,
     isLoading: editPowerIsLoading,
     error: editPowerError
-  } = useMutation((data: PowerData) => patchPower(data, tokenPromise), {
+  } = useMutation((data: PowerData) => patchPower(data, getToken), {
     onSuccess: () => {
       navigate("/powers");
     },
@@ -327,14 +370,15 @@ export const usePatchPowerAPI = () => {
 
 export const useDeletePowerAPI = () => {
 
-  const tokenPromise = useToken();
+  // get ckerk token
+  const { getToken } = useAuth();
 
   const navigate = useNavigate();
   const {
     mutate: removePower,
     isLoading: removePowerIsLoading,
     error: removePowerError
-  } = useMutation((id: number) => deletePower(id, tokenPromise), {
+  } = useMutation((id: number) => deletePower(id, getToken), {
     onSuccess: () => {
       navigate("/powers");
     },
