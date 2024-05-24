@@ -1,6 +1,7 @@
 import { useState, ChangeEvent, MouseEvent, FormEvent } from "react";
 import { usePostPowerAPI } from "../hooks/useAPI";
 import AddEditPowerForm from "../components/AddEditPowerForm";
+import NotificationModal from '../components/NotificationModal';
 
 const AddPower = () => {
 
@@ -35,21 +36,20 @@ const AddPower = () => {
   // disabled button
   const isDisabled = !powerName || !description;
 
-  // TODO make loading/error better looking :)
-  if (addPowerIsLoading) return <div>creating power...</div>;
-  if (addPowerError) return <div>error creating power...</div>;
-
   return (
-    <AddEditPowerForm
-      titleName="Add Power"
-      buttonName="Add Power"
-      powerName={powerName}
-      description={description}
-      isButtonDisabled={isDisabled}
-      handleOnChangeName={handleOnChangeName}
-      handleOnChangeDescription={handleOnChangeDescription}
-      handleOnSubmit={handleOnSubmit}
-    ></AddEditPowerForm>
+    <>
+      <NotificationModal {...{ addPowerIsLoading, addPowerError }} />
+      <AddEditPowerForm
+        titleName="Add Power"
+        buttonName="Add Power"
+        powerName={powerName}
+        description={description}
+        isButtonDisabled={isDisabled}
+        handleOnChangeName={handleOnChangeName}
+        handleOnChangeDescription={handleOnChangeDescription}
+        handleOnSubmit={handleOnSubmit}
+      ></AddEditPowerForm>
+    </>
   );
 };
 

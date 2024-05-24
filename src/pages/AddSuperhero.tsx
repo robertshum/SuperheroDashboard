@@ -4,6 +4,7 @@ import PowerLookup from "../components/PowerLookup";
 import { usePowerAPI } from "../hooks/useAPI";
 import { usePostHeroAPI } from "../hooks/useAPI";
 import Badge from "../components/Badge";
+import NotificationModal from "../components/NotificationModal";
 
 const AddSuperhero = () => {
 
@@ -64,7 +65,7 @@ const AddSuperhero = () => {
       }
 
       return (
-        <Badge 
+        <Badge
           key={x}
           onClickHandler={() => removePowerFromSelection(x)}
           name={powerName.tag}
@@ -125,34 +126,37 @@ const AddSuperhero = () => {
     });
   };
 
-  // TODO make loading/error better looking :)
-  if (powersError) return <div>fetching power...</div>;
-  if (powersIsLoading) return <div>error fetching power...</div>;
-  if (addHeroError) return <div>add hero error...</div>;
-  if (addHeroIsLoading) return <div>loading adding hero...</div>;
-
   return (
-    <AddEditSuperheroForm
-      titleName="Add Superhero"
-      buttonName="Add Superhero"
-      name={name}
-      firstName={firstName}
-      lastName={lastName}
-      place={place}
-      description={description}
-      isButtonDisabled={isDisabled}
-      handleOnChangeName={handleOnChangeName}
-      handleOnChangeFName={handleOnChangeFName}
-      handleOnChangeLName={handleOnChangeLName}
-      handleOnChangePlace={handleOnChangePlace}
-      handleOnChangeDescription={handleOnChangeDescription}
-      handleOnSubmit={handleOnSubmit}
-      selectedPowers={selectedJsxPowers}
-    >
-      {/* Composition, and all that jazz. */}
-      <PowerLookup setSelectedPowers={setSelectedPowers} />
+    <>
+      <NotificationModal {...
+        {
+          powersError,
+          powersIsLoading,
+          addHeroError,
+          addHeroIsLoading
+        }} />
+      <AddEditSuperheroForm
+        titleName="Add Superhero"
+        buttonName="Add Superhero"
+        name={name}
+        firstName={firstName}
+        lastName={lastName}
+        place={place}
+        description={description}
+        isButtonDisabled={isDisabled}
+        handleOnChangeName={handleOnChangeName}
+        handleOnChangeFName={handleOnChangeFName}
+        handleOnChangeLName={handleOnChangeLName}
+        handleOnChangePlace={handleOnChangePlace}
+        handleOnChangeDescription={handleOnChangeDescription}
+        handleOnSubmit={handleOnSubmit}
+        selectedPowers={selectedJsxPowers}
+      >
+        {/* Composition, and all that jazz. */}
+        <PowerLookup setSelectedPowers={setSelectedPowers} />
 
-    </AddEditSuperheroForm>
+      </AddEditSuperheroForm>
+    </>
   );
 };
 
