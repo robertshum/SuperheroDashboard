@@ -3,6 +3,7 @@ import { useState, ChangeEvent, MouseEvent, useEffect, FormEvent } from "react";
 import { usePatchPowerAPI, usePowerAPI } from '../hooks/useAPI';
 import AddEditPowerForm from '../components/AddEditPowerForm';
 import { useDeletePowerAPI } from '../hooks/useAPI';
+import NotificationModal from '../components/NotificationModal';
 
 const EditPower = () => {
 
@@ -74,27 +75,30 @@ const EditPower = () => {
   // disabled button
   const isDisabled = !powerName || !description;
 
-  // TODO make loading/error better looking :)
-  if (powersError) return <div>fetching power...</div>;
-  if (powersIsLoading) return <div>fetching power...</div>;
-  if (editPowerError) return <div>error editing power...</div>;
-  if (editPowerIsLoading) return <div>editing power...</div>;
-  if (removePowerIsLoading) return <div>removing power...</div>;
-  if (removePowerError) return <div>error removing power...</div>;
-
   return (
-    <AddEditPowerForm
-      titleName="Edit Power"
-      buttonName="Confirm"
-      buttonDeleteName="Delete Power"
-      powerName={powerName}
-      description={description}
-      isButtonDisabled={isDisabled}
-      handleOnChangeName={handleOnChangeName}
-      handleOnChangeDescription={handleOnChangeDescription}
-      handleOnSubmit={handleOnSubmit}
-      handleOnDelete={handleOnDelete}
-    />
+    <>
+      <NotificationModal {...
+        {
+          powersError,
+          powersIsLoading,
+          editPowerError,
+          editPowerIsLoading,
+          removePowerIsLoading,
+          removePowerError,
+        }} />
+      <AddEditPowerForm
+        titleName="Edit Power"
+        buttonName="Confirm"
+        buttonDeleteName="Delete Power"
+        powerName={powerName}
+        description={description}
+        isButtonDisabled={isDisabled}
+        handleOnChangeName={handleOnChangeName}
+        handleOnChangeDescription={handleOnChangeDescription}
+        handleOnSubmit={handleOnSubmit}
+        handleOnDelete={handleOnDelete}
+      />
+    </>
   );
 };
 

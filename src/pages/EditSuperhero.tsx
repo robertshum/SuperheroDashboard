@@ -5,6 +5,7 @@ import { usePatchSuperheroAPI, usePowerAPI, useSuperheroAPI } from "../hooks/use
 import { useParams } from "react-router-dom";
 import Badge from "../components/Badge";
 import { useDeleteSuperheroAPI } from "../hooks/useAPI";
+import NotificationModal from "../components/NotificationModal";
 
 const EditHero = () => {
 
@@ -182,29 +183,42 @@ const EditHero = () => {
   };
 
   return (
-    <AddEditSuperheroForm
-      titleName="Edit Superhero"
-      buttonName="Confirm"
-      buttonDeleteName="Delete Hero"
-      name={name}
-      firstName={firstName}
-      lastName={lastName}
-      place={place}
-      description={description}
-      isButtonDisabled={isDisabled}
-      handleOnChangeName={handleOnChangeName}
-      handleOnChangeFName={handleOnChangeFName}
-      handleOnChangeLName={handleOnChangeLName}
-      handleOnChangePlace={handleOnChangePlace}
-      handleOnChangeDescription={handleOnChangeDescription}
-      handleOnSubmit={handleOnSubmit}
-      handleOnDelete={handleOnDelete}
-      selectedPowers={selectedJsxPowers}
-    >
-      {/* Composition, and all that jazz. */}
-      <PowerLookup setSelectedPowers={setSelectedPowers} />
+    <>
+      <NotificationModal {...
+        {
+          superHeroesError,
+          superHeroesIsLoading,
+          powersError,
+          powersIsLoading,
+          editHeroError,
+          editHeroIsLoading,
+          removeHeroError,
+          removeHeroIsLoading,
+        }} />
+      <AddEditSuperheroForm
+        titleName="Edit Superhero"
+        buttonName="Confirm"
+        buttonDeleteName="Delete Hero"
+        name={name}
+        firstName={firstName}
+        lastName={lastName}
+        place={place}
+        description={description}
+        isButtonDisabled={isDisabled}
+        handleOnChangeName={handleOnChangeName}
+        handleOnChangeFName={handleOnChangeFName}
+        handleOnChangeLName={handleOnChangeLName}
+        handleOnChangePlace={handleOnChangePlace}
+        handleOnChangeDescription={handleOnChangeDescription}
+        handleOnSubmit={handleOnSubmit}
+        handleOnDelete={handleOnDelete}
+        selectedPowers={selectedJsxPowers}
+      >
+        {/* Composition, and all that jazz. */}
+        <PowerLookup setSelectedPowers={setSelectedPowers} />
 
-    </AddEditSuperheroForm>
+      </AddEditSuperheroForm>
+    </>
   );
 };
 

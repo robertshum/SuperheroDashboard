@@ -8,6 +8,14 @@ const NotificationModal = (props:
     addPowerError?: unknown;
     addHeroIsLoading?: boolean;
     addHeroError?: unknown;
+    editPowerIsLoading?: boolean;
+    editPowerError?: unknown;
+    removePowerIsLoading?: boolean;
+    removePowerError?: unknown;
+    editHeroIsLoading?: boolean;
+    editHeroError?: unknown;
+    removeHeroIsLoading?: boolean;
+    removeHeroError?: unknown;
   }) => {
 
   let topMsg = "";
@@ -53,6 +61,46 @@ const NotificationModal = (props:
     bottomMsg = "We are having issues creating a new superhero...";
   }
 
+  if (props.editPowerIsLoading) {
+    topMsg = "Editing Power";
+    bottomMsg = "Modifying the power...";
+  }
+
+  if (props.editPowerError) {
+    topMsg = "Error Editing Power";
+    bottomMsg = "We are having issues modifying the power...";
+  }
+
+  if (props.removePowerIsLoading) {
+    topMsg = "Removing Power";
+    bottomMsg = "Removing power from this world...";
+  }
+
+  if (props.removePowerError) {
+    topMsg = "Error Removing Power";
+    bottomMsg = "We are having issues removing such an awesome power...";
+  }
+
+  if (props.editHeroIsLoading) {
+    topMsg = "Editing Hero";
+    bottomMsg = "Changing hero information...";
+  }
+
+  if (props.editHeroError) {
+    topMsg = "Error Editing Hero";
+    bottomMsg = "We are having issues changing hero information...";
+  }
+
+  if (props.removeHeroIsLoading) {
+    topMsg = "Removing Hero";
+    bottomMsg = "Banishing hero or villain...";
+  }
+
+  if (props.removeHeroError) {
+    topMsg = "Error Removing Hero";
+    bottomMsg = "We are having issues removing hero or villain...";
+  }
+
   //hide the modal if any of the msgs are empty
   if (topMsg.length === 0) {
     return (<></>);
@@ -62,8 +110,7 @@ const NotificationModal = (props:
     <>
       <dialog id="my_modal_5" className="modal modal-middle bg-slate-400 bg-opacity-50 opacity-100">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">
-            {topMsg}</h3>
+          <h3 className="font-bold text-lg">{topMsg}</h3>
           <p className="py-4">{bottomMsg}</p>
         </div>
       </dialog>
