@@ -3,6 +3,7 @@ import { useState, ChangeEvent, MouseEvent, useEffect, FormEvent } from "react";
 import { usePatchPowerAPI, usePowerAPI } from '../hooks/useAPI';
 import AddEditPowerForm from '../components/AddEditPowerForm';
 import { useDeletePowerAPI } from '../hooks/useAPI';
+import NotificationModal from '../components/NotificationModal';
 
 const EditPower = () => {
 
@@ -74,13 +75,21 @@ const EditPower = () => {
   // disabled button
   const isDisabled = !powerName || !description;
 
-  // TODO make loading/error better looking :)
-  if (powersError) return <div>fetching power...</div>;
-  if (powersIsLoading) return <div>fetching power...</div>;
-  if (editPowerError) return <div>error editing power...</div>;
-  if (editPowerIsLoading) return <div>editing power...</div>;
-  if (removePowerIsLoading) return <div>removing power...</div>;
-  if (removePowerError) return <div>error removing power...</div>;
+  //hide or show popup
+  const showPopup = powersError || powersIsLoading || editPowerError || editPowerIsLoading || removePowerIsLoading || removePowerError;
+  if (showPopup) {
+    return (
+      <NotificationModal {...
+        {
+          powersError,
+          powersIsLoading,
+          editPowerError,
+          editPowerIsLoading,
+          removePowerIsLoading,
+          removePowerError,
+        }} />
+    );
+  }
 
   return (
     <AddEditPowerForm

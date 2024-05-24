@@ -5,6 +5,7 @@ import { usePatchSuperheroAPI, usePowerAPI, useSuperheroAPI } from "../hooks/use
 import { useParams } from "react-router-dom";
 import Badge from "../components/Badge";
 import { useDeleteSuperheroAPI } from "../hooks/useAPI";
+import NotificationModal from "../components/NotificationModal";
 
 const EditHero = () => {
 
@@ -108,16 +109,6 @@ const EditHero = () => {
 
   }, [selectedPowers, powerMapping]);
 
-  // TODO make loading/error better looking :)
-  if (superHeroesError) return <div>error fetching hero...</div>;
-  if (superHeroesIsLoading) return <div>loading superhero...</div>;
-  if (editHeroError) return <div>editing hero error...</div>;
-  if (editHeroIsLoading) return <div>loading editing hero...</div>;
-  if (powersError) return <div>error loading power...</div>;
-  if (powersIsLoading) return <div>loading powers...</div>;
-  if (removeHeroIsLoading) return <div>removing hero...</div>;
-  if (removeHeroError) return <div>error removing hero...</div>;
-
   const isDisabled = !name || !firstName || !lastName || !place || !description;
 
   // Remove f(n) from selected list
@@ -180,6 +171,24 @@ const EditHero = () => {
     //start deleting hero
     removeHero(Number(superHeroId));
   };
+
+  //hide or show popup
+  const showPopup = superHeroesError || superHeroesIsLoading || powersError || powersIsLoading || editHeroError || editHeroIsLoading || removeHeroError || removeHeroIsLoading;
+  if (showPopup) {
+    return (
+      <NotificationModal {...
+        {
+          superHeroesError,
+          superHeroesIsLoading,
+          powersError,
+          powersIsLoading,
+          editHeroError,
+          editHeroIsLoading,
+          removeHeroError,
+          removeHeroIsLoading,
+        }} />
+    );
+  }
 
   return (
     <AddEditSuperheroForm

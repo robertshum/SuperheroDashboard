@@ -2,6 +2,7 @@ import PowerIcon from '../components/graphics/PowerIcon';
 import NumHeroesIcon from '../components/graphics/NumHeroesIcon';
 import FewestPowersIcon from '../components/graphics/FewestPowersIcon';
 import MostPowersIcon from '../components/graphics/MostPowersIcon';
+import NotificationModal from '../components/NotificationModal';
 import StatCard from '../components/StatCard';
 import usePowersData from "../hooks/usePowersData";
 import useSuperHeroesData from "../hooks/useSuperHeroesData";
@@ -42,11 +43,18 @@ function Dashboard() {
 
   const fewestPowerStr = `with ${fewestPowers.num} ${fewestPowers.num <= 1 ? "Power." : "powers."}  We still love you!`;
 
-  // TODO make loading/error better looking :)
-  if (powersIsLoading) return <div>Fetching powers...</div>;
-  if (powersError) return <div>An error occured fetching powers</div>;
-  if (superHeroesIsLoading) return <div>Fetching superheroes...</div>;
-  if (superHeroesError) return <div>An error occured fetching superheroes...</div>;
+  //hide or show popup
+  const showPopup = powersIsLoading || powersError || superHeroesIsLoading || superHeroesError;
+  if (showPopup) {
+    return (
+      <NotificationModal {...{
+        powersIsLoading,
+        powersError,
+        superHeroesIsLoading,
+        superHeroesError
+      }} />
+    );
+  }
 
   return (
     <div className="flex flex-col">
@@ -103,6 +111,6 @@ function Dashboard() {
       </div>
     </div >
   );
-}
+};
 
 export default Dashboard;

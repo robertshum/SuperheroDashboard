@@ -3,6 +3,7 @@ import useSuperHeroesData from "../hooks/useSuperHeroesData";
 import { Link } from 'react-router-dom';
 import FilterForm from "../components/FilterForm";
 import { ChangeEvent, useEffect, useState } from "react";
+import NotificationModal from "../components/NotificationModal";
 
 function Superheroes() {
 
@@ -56,9 +57,12 @@ function Superheroes() {
     setFilter(newValue);
   };
 
-  // TODO make loading/error better looking :)
-  if (superHeroesIsLoading) return <div>Fetching heroes...</div>;
-  if (superHeroesError) return <div>An error occured fetching heroes</div>;
+  const showPopup = superHeroesIsLoading || superHeroesError;
+  if (showPopup) {
+    return (
+      <NotificationModal {...{ superHeroesIsLoading, superHeroesError }} />
+    );
+  }
 
   return (
     <div className="flex flex-col">

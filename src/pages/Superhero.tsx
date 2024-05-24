@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useSuperheroAPI } from '../hooks/useAPI';
 import { useNavigate } from "react-router-dom";
+import NotificationModal from '../components/NotificationModal';
 
 const Superhero = () => {
 
@@ -17,9 +18,11 @@ const Superhero = () => {
   // Ensure superHeroesFromQuery is of type SuperheroData
   const hero = superHeroesFromQuery as SuperheroData;
 
-  // TODO make loading/error better looking :)
-  if (superHeroesIsLoading) return <div>Fetching powers...</div>;
-  if (superHeroesError) return <div>An error occured fetching powers</div>;
+  //hide or show popup
+  const showPopup = superHeroesIsLoading || superHeroesError;
+  if (showPopup) {
+    return (<NotificationModal {...{ superHeroesIsLoading, superHeroesError }} />);
+  }
 
   return (
     <div className="flex flex-col">

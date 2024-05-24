@@ -4,6 +4,7 @@ import PowerLookup from "../components/PowerLookup";
 import { usePowerAPI } from "../hooks/useAPI";
 import { usePostHeroAPI } from "../hooks/useAPI";
 import Badge from "../components/Badge";
+import NotificationModal from "../components/NotificationModal";
 
 const AddSuperhero = () => {
 
@@ -64,7 +65,7 @@ const AddSuperhero = () => {
       }
 
       return (
-        <Badge 
+        <Badge
           key={x}
           onClickHandler={() => removePowerFromSelection(x)}
           name={powerName.tag}
@@ -125,11 +126,19 @@ const AddSuperhero = () => {
     });
   };
 
-  // TODO make loading/error better looking :)
-  if (powersError) return <div>fetching power...</div>;
-  if (powersIsLoading) return <div>error fetching power...</div>;
-  if (addHeroError) return <div>add hero error...</div>;
-  if (addHeroIsLoading) return <div>loading adding hero...</div>;
+  //hide or show popup
+  const showPopup = powersIsLoading || powersError || addHeroError || addHeroIsLoading;
+  if (showPopup) {
+    return (
+      <NotificationModal {...
+        {
+          powersError,
+          powersIsLoading,
+          addHeroError,
+          addHeroIsLoading
+        }} />
+    );
+  }
 
   return (
     <AddEditSuperheroForm
