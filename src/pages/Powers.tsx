@@ -3,6 +3,7 @@ import usePowersData from "../hooks/usePowersData";
 import { Link } from 'react-router-dom';
 import FilterForm from "../components/FilterForm";
 import { ChangeEvent, useEffect, useState } from "react";
+import NotificationModal from "../components/NotificationModal";
 
 function Powers() {
 
@@ -57,9 +58,11 @@ function Powers() {
     setFilter(newValue);
   };
 
-  // TODO make loading/error better looking :)
-  if (powersIsLoading) return <div>Fetching powers...</div>;
-  if (powersError) return <div>An error occured fetching powers</div>;
+  //hide or show popup
+  const showPopup = powersIsLoading || powersError;
+  if (showPopup) {
+    return (<NotificationModal {...{ powersIsLoading, powersError }} />);
+  }
 
   return (
     <div className="flex flex-col">
@@ -71,7 +74,7 @@ function Powers() {
             {/* NEW Powers */}
             <Link to="/power/add"
               className="btn btn-md btn-ghost text-xl outline-dashed">+ Add New Power</Link>
-              {/* Filter power */}
+            {/* Filter power */}
             <FilterForm
               labelText="Filter by power"
               placeholderText="Flight"

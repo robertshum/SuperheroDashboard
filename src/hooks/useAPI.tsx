@@ -14,7 +14,7 @@ if (ENV_PORT) {
 
 const API_SUFFIX: string = import.meta.env.VITE_API_SUFFIX;
 
-const getPowers = async (token: GetToken | null, id?: number) => {
+const getPowers = async (token: GetToken, id?: number) => {
 
   if (!token) {
     throw new Error('We cannot validate this request without a token.');
@@ -32,7 +32,7 @@ const getPowers = async (token: GetToken | null, id?: number) => {
   return jsonResults;
 };
 
-const getSuperHeroes = async (token: GetToken | null, id?: number) => {
+const getSuperHeroes = async (token: GetToken, id?: number) => {
   const heroSuffix = id === undefined ? 'SuperHero' : `SuperHero/${id}`;
 
   if (!token) {

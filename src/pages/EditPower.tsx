@@ -75,8 +75,10 @@ const EditPower = () => {
   // disabled button
   const isDisabled = !powerName || !description;
 
-  return (
-    <>
+  //hide or show popup
+  const showPopup = powersError || powersIsLoading || editPowerError || editPowerIsLoading || removePowerIsLoading || removePowerError;
+  if (showPopup) {
+    return (
       <NotificationModal {...
         {
           powersError,
@@ -86,19 +88,22 @@ const EditPower = () => {
           removePowerIsLoading,
           removePowerError,
         }} />
-      <AddEditPowerForm
-        titleName="Edit Power"
-        buttonName="Confirm"
-        buttonDeleteName="Delete Power"
-        powerName={powerName}
-        description={description}
-        isButtonDisabled={isDisabled}
-        handleOnChangeName={handleOnChangeName}
-        handleOnChangeDescription={handleOnChangeDescription}
-        handleOnSubmit={handleOnSubmit}
-        handleOnDelete={handleOnDelete}
-      />
-    </>
+    );
+  }
+
+  return (
+    <AddEditPowerForm
+      titleName="Edit Power"
+      buttonName="Confirm"
+      buttonDeleteName="Delete Power"
+      powerName={powerName}
+      description={description}
+      isButtonDisabled={isDisabled}
+      handleOnChangeName={handleOnChangeName}
+      handleOnChangeDescription={handleOnChangeDescription}
+      handleOnSubmit={handleOnSubmit}
+      handleOnDelete={handleOnDelete}
+    />
   );
 };
 

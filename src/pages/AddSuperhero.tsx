@@ -126,8 +126,10 @@ const AddSuperhero = () => {
     });
   };
 
-  return (
-    <>
+  //hide or show popup
+  const showPopup = powersIsLoading || powersError || addHeroError || addHeroIsLoading;
+  if (showPopup) {
+    return (
       <NotificationModal {...
         {
           powersError,
@@ -135,28 +137,31 @@ const AddSuperhero = () => {
           addHeroError,
           addHeroIsLoading
         }} />
-      <AddEditSuperheroForm
-        titleName="Add Superhero"
-        buttonName="Add Superhero"
-        name={name}
-        firstName={firstName}
-        lastName={lastName}
-        place={place}
-        description={description}
-        isButtonDisabled={isDisabled}
-        handleOnChangeName={handleOnChangeName}
-        handleOnChangeFName={handleOnChangeFName}
-        handleOnChangeLName={handleOnChangeLName}
-        handleOnChangePlace={handleOnChangePlace}
-        handleOnChangeDescription={handleOnChangeDescription}
-        handleOnSubmit={handleOnSubmit}
-        selectedPowers={selectedJsxPowers}
-      >
-        {/* Composition, and all that jazz. */}
-        <PowerLookup setSelectedPowers={setSelectedPowers} />
+    );
+  }
 
-      </AddEditSuperheroForm>
-    </>
+  return (
+    <AddEditSuperheroForm
+      titleName="Add Superhero"
+      buttonName="Add Superhero"
+      name={name}
+      firstName={firstName}
+      lastName={lastName}
+      place={place}
+      description={description}
+      isButtonDisabled={isDisabled}
+      handleOnChangeName={handleOnChangeName}
+      handleOnChangeFName={handleOnChangeFName}
+      handleOnChangeLName={handleOnChangeLName}
+      handleOnChangePlace={handleOnChangePlace}
+      handleOnChangeDescription={handleOnChangeDescription}
+      handleOnSubmit={handleOnSubmit}
+      selectedPowers={selectedJsxPowers}
+    >
+      {/* Composition, and all that jazz. */}
+      <PowerLookup setSelectedPowers={setSelectedPowers} />
+
+    </AddEditSuperheroForm>
   );
 };
 

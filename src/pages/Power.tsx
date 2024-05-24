@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { usePowerAPI } from '../hooks/useAPI';
+import NotificationModal from '../components/NotificationModal';
 
 const Power = () => {
 
@@ -15,9 +16,11 @@ const Power = () => {
   // Ensure powersFromQuery is of type PowerData
   const power = powersFromQuery as PowerData;
 
-  // TODO make loading/error better looking :)
-  if (powersIsLoading) return <div>Fetching powers...</div>;
-  if (powersError) return <div>An error occured fetching powers</div>;
+  //hide or show popup
+  const showPopup = powersIsLoading || powersError;
+  if (showPopup) {
+    return (<NotificationModal {...{ powersIsLoading, powersError }} />);
+  }
 
   return (
     <div className="flex flex-col">

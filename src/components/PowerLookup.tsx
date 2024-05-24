@@ -2,6 +2,7 @@ import { usePowerAPI } from "../hooks/useAPI";
 import { usePowersSelectionData } from "../hooks/usePowersData";
 import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from "react";
 import FilterForm from "../components/FilterForm";
+import NotificationModal from "./NotificationModal";
 
 type PowerLookupProps = {
   setSelectedPowers: Dispatch<SetStateAction<number[]>>;
@@ -61,9 +62,11 @@ const PowerLookup = (props: PowerLookupProps) => {
     setFilter(newValue);
   };
 
-  // TODO make loading/error better looking :)
-  if (powersIsLoading) return <div>Fetching powers...</div>;
-  if (powersError) return <div>An error occured fetching powers</div>;
+  //hide or show popup
+  const showPopup = powersIsLoading || powersError;
+  if (showPopup) {
+    return (<NotificationModal {...{ powersIsLoading, powersError }} />);
+  }
 
   return (
     <article className="mt-10 mb-2 gap-6">

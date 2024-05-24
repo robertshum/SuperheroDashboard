@@ -109,16 +109,6 @@ const EditHero = () => {
 
   }, [selectedPowers, powerMapping]);
 
-  // TODO make loading/error better looking :)
-  if (superHeroesError) return <div>error fetching hero...</div>;
-  if (superHeroesIsLoading) return <div>loading superhero...</div>;
-  if (editHeroError) return <div>editing hero error...</div>;
-  if (editHeroIsLoading) return <div>loading editing hero...</div>;
-  if (powersError) return <div>error loading power...</div>;
-  if (powersIsLoading) return <div>loading powers...</div>;
-  if (removeHeroIsLoading) return <div>removing hero...</div>;
-  if (removeHeroError) return <div>error removing hero...</div>;
-
   const isDisabled = !name || !firstName || !lastName || !place || !description;
 
   // Remove f(n) from selected list
@@ -182,8 +172,10 @@ const EditHero = () => {
     removeHero(Number(superHeroId));
   };
 
-  return (
-    <>
+  //hide or show popup
+  const showPopup = superHeroesError || superHeroesIsLoading || powersError || powersIsLoading || editHeroError || editHeroIsLoading || removeHeroError || removeHeroIsLoading;
+  if (showPopup) {
+    return (
       <NotificationModal {...
         {
           superHeroesError,
@@ -195,30 +187,33 @@ const EditHero = () => {
           removeHeroError,
           removeHeroIsLoading,
         }} />
-      <AddEditSuperheroForm
-        titleName="Edit Superhero"
-        buttonName="Confirm"
-        buttonDeleteName="Delete Hero"
-        name={name}
-        firstName={firstName}
-        lastName={lastName}
-        place={place}
-        description={description}
-        isButtonDisabled={isDisabled}
-        handleOnChangeName={handleOnChangeName}
-        handleOnChangeFName={handleOnChangeFName}
-        handleOnChangeLName={handleOnChangeLName}
-        handleOnChangePlace={handleOnChangePlace}
-        handleOnChangeDescription={handleOnChangeDescription}
-        handleOnSubmit={handleOnSubmit}
-        handleOnDelete={handleOnDelete}
-        selectedPowers={selectedJsxPowers}
-      >
-        {/* Composition, and all that jazz. */}
-        <PowerLookup setSelectedPowers={setSelectedPowers} />
+    );
+  }
 
-      </AddEditSuperheroForm>
-    </>
+  return (
+    <AddEditSuperheroForm
+      titleName="Edit Superhero"
+      buttonName="Confirm"
+      buttonDeleteName="Delete Hero"
+      name={name}
+      firstName={firstName}
+      lastName={lastName}
+      place={place}
+      description={description}
+      isButtonDisabled={isDisabled}
+      handleOnChangeName={handleOnChangeName}
+      handleOnChangeFName={handleOnChangeFName}
+      handleOnChangeLName={handleOnChangeLName}
+      handleOnChangePlace={handleOnChangePlace}
+      handleOnChangeDescription={handleOnChangeDescription}
+      handleOnSubmit={handleOnSubmit}
+      handleOnDelete={handleOnDelete}
+      selectedPowers={selectedJsxPowers}
+    >
+      {/* Composition, and all that jazz. */}
+      <PowerLookup setSelectedPowers={setSelectedPowers} />
+
+    </AddEditSuperheroForm>
   );
 };
 
