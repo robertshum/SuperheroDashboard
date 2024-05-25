@@ -16,6 +16,7 @@ This project is the front-end which requires back-end API that I have also built
 * Simple analytics on the main page (dashboard).
 * Responsive design (thanks to Daisy + Tailwind).
 * Dark/Light mode.
+* Clerk Auth.
 
 ## Tech Stack
 
@@ -28,6 +29,7 @@ This project is the front-end which requires back-end API that I have also built
 
 - Back-end:
   - .Net 8.0
+  - Redis
   - EF Core
   - NUnit
   - Moq
