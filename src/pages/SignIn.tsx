@@ -10,7 +10,8 @@ const SignIn = () => {
           <h1 className="mb-5 text-5xl font-bold">Superhero Dashboard</h1>
           <p className="mb-5">Manage and view all the superheroes in the known universe with this simple app, whith some basic analytics. </p>
           <p className="mb-5">Sign up and use for free right now!</p>
-          <p className="mb-5 font-bold">This project is backed by a free version of Azure SQL, however, it has reached it's monthly bandwidth until the next month.  Sorry for the inconvenience!</p>
+          <p className="mb-5 font-bold">This project is backed by a free version of Azure SQL.  Back-end services may go down when the free tier reaches it's monthly limit.  Thank you for understanding! </p>
+          {/* <p className="mb-5 font-bold">This project is backed by a free version of Azure SQL, however, it has reached it's monthly bandwidth until the next month.  Sorry for the inconvenience!</p> */}
           <SignInButton>
             <button className="btn btn-primary">Sign In</button>
           </SignInButton>
